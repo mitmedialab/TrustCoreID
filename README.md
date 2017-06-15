@@ -39,7 +39,7 @@ General inquiries include whether the following technologies individually or in 
 * Alice uses her app to digitally sign the contract first, then Bob signs with a comparable app from his Credit Union. 
 * Alice and Bob each have an exact copy of the mutually signed contract.
 * Alice provides $8,000 in cash to Bob in exchange for Bob's car title and keys.
-* Alice discovers the vehicle is made of realistic looking clay when she attempts to unlock the door.
+* Alice discovers the vehicle is made of realistic looking [clay](https://www.merriam-webster.com/dictionary/clay) when she attempts to unlock the door.
 * Alice sues Bob in Suffolk Superior Court in the City of Boston, where Alice lives.
 
 **Use Case Evaluation Criteria:**
