@@ -48,9 +48,11 @@ General inquiries include whether the following technologies individually or in 
 
 ## Contextual Scenario: Blockchain-Pegged Digital Signatures for Identity Attributes and Verified Claims  
 
-**Use Case 1.1 - Blockchain-Backed Digital Signatures on Age and Ship-To Address of E-Commerce Consumer
+### Use Case 1.1 - Blockchain-Backed Digital Signatures on Age and Ship-To Address of E-Commerce Consumer
 
-**Use Case 1.2 - App Providers are US Federal Credit Unions
+[Note: explore impact on identity theft and other common fraud[
+
+### Use Case 1.2 - App Providers are US Federal Credit Unions
 
 [Note: Explore the impact of linking depository account holder (KYC/AML/etc) and Public Key on Blockchain]
 
