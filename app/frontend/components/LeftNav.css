@@ -1,0 +1,59 @@
+.list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+
+.list li a {
+    margin: 0;
+    padding: 10px 10px 10px 20px;
+    cursor: pointer;
+    transition: all 300ms;
+    text-decoration: none;
+    display: block;
+    color: #525870;
+}
+
+.list li a i {
+    margin-right: 10px;
+}
+
+.list li.selected {
+    background-color: #525870;
+    color: #FFFFFF;
+}
+
+.list li.selected a {
+    color: #FFFFFF;
+}
+
+.list li.selected .bullet{
+    color: #FFF;
+}
+
+.list li:hover a {
+    background-color: #525870;
+    color: #FFFFFF;
+}
+
+.list li:hover .bullet{
+    color: #FFF;
+}
+
+
+.nav {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    width: 160px;
+}
+
+.bullet {
+    margin-left: 10px;
+    color: #525870;
+    border-radius: 2px;
+    padding: 0 5px;
+    float: right;
+}

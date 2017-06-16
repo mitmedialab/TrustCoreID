@@ -1,0 +1,43 @@
+.anonWrapper {
+    background-color: #525870;
+    color: #FFFFFF;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.anonWrapper input {
+    margin-top: 40px;
+}
+
+.container {
+    color: #525870;
+    background-color: #FFFFFF;
+    max-width: 400px;
+    margin: 60px auto auto;
+    display: block;
+    padding: 30px;
+    box-shadow: 0 2px 12px 8px rgba(0,0,0,0.1);
+}
+
+.container h1 {
+    text-align: center;
+    margin: -30px -30px 30px;
+    padding: 60px;
+    color: rgba(70, 70, 70, 1);
+    background-color: rgba(210, 210, 210, 1);
+}
+
+
+.login {
+    margin: 40px 0;
+    padding: 10px 0;
+    width: 100%;
+    background-color: rgba(210, 210, 210, 1);
+    color: #000;
+    display: block;
+    text-align: center;
+}
+

@@ -1,0 +1,22 @@
+
+.topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    right: 0;
+    padding: 10px 20px;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.4);
+    background-color: #525870;
+    color: #FFF;
+}
+
+.topbar a {
+    color: #FFF;
+    margin-right: 20px;
+    text-decoration: none;
+}
+
+.topbar a i {
+    margin-right: 5px;
+}

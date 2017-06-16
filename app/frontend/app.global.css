@@ -1,0 +1,549 @@
+@import url(~font-awesome/css/font-awesome.css);
+label {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 14px;
+  color: #636c72;
+  font-weight: 900;
+}
+
+input {
+  width: 100%;
+  border: 0 none;
+  border-bottom: 1px solid #eceeef;
+  padding: 5px 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #636c72;
+  font-weight: 100;
+  outline: none;
+  transition: all 400ms;
+}
+
+input:focus {
+  border-bottom: 1px solid #0277BD;
+  color: #0277BD;
+}
+
+input:focus + label {
+  color: #0277BD;
+}
+
+a {
+  color: #0277BD;
+  cursor: pointer;
+}
+
+.button {
+  background-color: #0277BD;
+  color: #fff;
+  display: inline-block;
+  margin: 40px 0;
+  padding: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.button.full {
+  display: block;
+}
+
+.button:hover {
+  background-color: #0287d6;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+}
+
+.m-1 {
+  margin: 5px !important;
+}
+
+.mt-1 {
+  margin-top: 5px !important;
+}
+
+.mr-1 {
+  margin-right: 5px !important;
+}
+
+.mb-1 {
+  margin-bottom: 5px !important;
+}
+
+.ml-1 {
+  margin-left: 5px !important;
+}
+
+.mx-1 {
+  margin-right: 5px !important;
+  margin-left: 5px !important;
+}
+
+.my-1 {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+.m-2 {
+  margin: 10px !important;
+}
+
+.mt-2 {
+  margin-top: 10px !important;
+}
+
+.mr-2 {
+  margin-right: 10px !important;
+}
+
+.mb-2 {
+  margin-bottom: 10px !important;
+}
+
+.ml-2 {
+  margin-left: 10px !important;
+}
+
+.mx-2 {
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+}
+
+.my-2 {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.m-3 {
+  margin: 15px !important;
+}
+
+.mt-3 {
+  margin-top: 15px !important;
+}
+
+.mr-3 {
+  margin-right: 15px !important;
+}
+
+.mb-3 {
+  margin-bottom: 15px !important;
+}
+
+.ml-3 {
+  margin-left: 15px !important;
+}
+
+.mx-3 {
+  margin-right: 15px !important;
+  margin-left: 15px !important;
+}
+
+.my-3 {
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
+
+.m-4 {
+  margin: 20px !important;
+}
+
+.mt-4 {
+  margin-top: 20px !important;
+}
+
+.mr-4 {
+  margin-right: 20px !important;
+}
+
+.mb-4 {
+  margin-bottom: 20px !important;
+}
+
+.ml-4 {
+  margin-left: 20px !important;
+}
+
+.mx-4 {
+  margin-right: 20px !important;
+  margin-left: 20px !important;
+}
+
+.my-4 {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.p-1 {
+  padding: 5px !important;
+}
+
+.pt-1 {
+  padding-top: 5px !important;
+}
+
+.pr-1 {
+  padding-right: 5px !important;
+}
+
+.pb-1 {
+  padding-bottom: 5px !important;
+}
+
+.pl-1 {
+  padding-left: 5px !important;
+}
+
+.px-1 {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
+.py-1 {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.p-2 {
+  padding: 10px !important;
+}
+
+.pt-2 {
+  padding-top: 10px !important;
+}
+
+.pr-2 {
+  padding-right: 10px !important;
+}
+
+.pb-2 {
+  padding-bottom: 10px !important;
+}
+
+.pl-2 {
+  padding-left: 10px !important;
+}
+
+.px-2 {
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
+
+.py-2 {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.p-3 {
+  padding: 15px !important;
+}
+
+.pt-3 {
+  padding-top: 15px !important;
+}
+
+.pr-3 {
+  padding-right: 15px !important;
+}
+
+.pb-3 {
+  padding-bottom: 15px !important;
+}
+
+.pl-3 {
+  padding-left: 15px !important;
+}
+
+.px-3 {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+}
+
+.py-3 {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
+
+.p-4 {
+  padding: 20px !important;
+}
+
+.pt-4 {
+  padding-top: 20px !important;
+}
+
+.pr-4 {
+  padding-right: 20px !important;
+}
+
+.pb-4 {
+  padding-bottom: 20px !important;
+}
+
+.pl-4 {
+  padding-left: 20px !important;
+}
+
+.px-4 {
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+}
+
+.py-4 {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+div#wrapper {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  border-radius: 50%;
+}
+
+div#wrapper:before {
+  content: ' ';
+  background-color: #d2d2d2;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  z-index: 3;
+  margin-left: -10px;
+  margin-top: -10px;
+}
+
+div#wrapper:after {
+  content: ' ';
+  background-color: #d2d2d2;
+  width: 120px;
+  height: 120px;
+  transform: rotate(45deg);
+  margin-left: -10px;
+  margin-top: -110px;
+  position: absolute;
+  z-index: 3;
+}
+
+.smiley {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  border-radius: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  z-index: 4;
+}
+
+.smiley:after {
+  content: "List is empty";
+  width: 300px;
+  position: absolute;
+  top: 150%;
+  left: 50%;
+  margin-left: -40px;
+  color: #bdbdbd;
+}
+
+.smiley .eye {
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  position: absolute;
+}
+
+.left-eye {
+  top: 40px;
+  left: 30px;
+}
+
+.right-eye {
+  top: 40px;
+  right: 30px;
+}
+
+.mouth {
+  -webkit-border-bottom-right-radius: 25px;
+  -webkit-border-bottom-left-radius: 25px;
+  -moz-border-radius-bottomright: 25px;
+  -moz-border-radius-bottomleft: 25px;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  height: 25px;
+  background-color: #000;
+  position: absolute;
+  width: 50px;
+  left: 25px;
+  top: 60px;
+}
+
+/*you can programmatically set the colors or even background images of these here */
+div#wrapper, .smiley div {
+  background-color: #d2d2d2;
+}
+
+.smiley {
+  background-color: #fafafa;
+}
+
+.header {
+  background-color: #eceeef;
+  border-bottom: 1px solid #c6c6c6;
+  padding: 10px;
+  margin: 10px -10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #464a4c;
+}
+
+.header:first-child {
+  margin-top: 0;
+}
+
+.item {
+  display: block;
+  margin: 5px 0;
+  padding: 5px;
+  border: 1px solid #f7f7f9;
+  border-left: 2px solid #0277BD;
+}
+
+.listItem {
+  display: block;
+}
+
+.listItem .listItemLabel {
+  display: inline-block;
+  color: #636c72;
+  font-weight: 900;
+  font-size: 14px;
+  font-variant: small-caps;
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listItem .signature {
+  background-color: #000;
+  color: #f7f7f9;
+  font-size: 12px;
+  word-break: break-all;
+  padding: 5px;
+}
+
+.btn {
+  padding: 5px 10px;
+  transition: all 300ms;
+  border-radius: 2px;
+}
+
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background-color: #0277BD;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #0287d6;
+}
+
+.btn-primary-outline {
+  border: 1px solid #0277BD;
+  color: #0277BD;
+  background-color: #fff;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url("./assets/fonts/lato-black.eot");
+  src: url("./assets/fonts/lato-black.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/lato-black.woff") format("woff"), url("./assets/fonts/lato-black.ttf") format("truetype"), url("./assets/fonts/lato-black.svg#latoblack") format("svg");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url("./assets/fonts/lato-bold.eot");
+  src: url("./assets/fonts/lato-bold.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/lato-bold.woff") format("woff"), url("./assets/fonts/lato-bold.ttf") format("truetype"), url("./assets/fonts/lato-bold.svg#latobold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url("./assets/fonts/lato-bolditalic.eot");
+  src: url("./assets/fonts/lato-bolditalic.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/lato-bolditalic.woff") format("woff"), url("./assets/fonts/lato-bolditalic.ttf") format("truetype"), url("./assets/fonts/lato-bolditalic.svg#latobold-italic") format("svg");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url("./assets/fonts/lato-italic.eot");
+  src: url("./assets/fonts/lato-italic.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/lato-italic.woff") format("woff"), url("./assets/fonts/lato-italic.ttf") format("truetype"), url("./assets/fonts/lato-italic.svg#latoitalic") format("svg");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url("./assets/fonts/lato-light.eot");
+  src: url("./assets/fonts/lato-light.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/lato-light.woff") format("woff"), url("./assets/fonts/lato-light.ttf") format("truetype"), url("./assets/fonts/lato-light.svg#latolight") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url("./assets/fonts/lato-regular.eot");
+  src: url("./assets/fonts/lato-regular.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/lato-regular.woff") format("woff"), url("./assets/fonts/lato-regular.ttf") format("truetype"), url("./assets/fonts/lato-regular.svg#latoregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font-family: 'Lato', Arial, Helvetica, Helvetica Neue, serif;
+  font-weight: 100;
+  overflow-y: hidden;
+  background-color: #fafafa;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.float-right {
+  float: right;
+}
+
+.container {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 160px;
+  right: 0;
+  overflow: auto;
+  padding: 20px;
+}
+
+.container.white {
+  background-color: #fff;
+}
+
+/*# sourceMappingURL=app.global.css.map */
