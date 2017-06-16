@@ -1,0 +1,29 @@
+@import 'variables';
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @for $size from 1 through 4 {
+    .#{$abbrev}-#{$size} {
+      #{$prop}: $size * $base-spacer !important;
+    }
+    .#{$abbrev}t-#{$size} {
+      #{$prop}-top: $size * $base-spacer !important;
+    }
+    .#{$abbrev}r-#{$size} {
+      #{$prop}-right: $size * $base-spacer !important;
+    }
+    .#{$abbrev}b-#{$size} {
+      #{$prop}-bottom: $size * $base-spacer !important;
+    }
+    .#{$abbrev}l-#{$size} {
+      #{$prop}-left: $size * $base-spacer !important;
+    }
+    .#{$abbrev}x-#{$size} {
+      #{$prop}-right: $size * $base-spacer !important;
+      #{$prop}-left: $size * $base-spacer !important;
+    }
+    .#{$abbrev}y-#{$size} {
+      #{$prop}-top: $size * $base-spacer !important;
+      #{$prop}-bottom: $size * $base-spacer !important;
+    }
+  }
+}
