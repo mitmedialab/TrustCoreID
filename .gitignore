@@ -21,6 +21,8 @@ coverage
 /app/dll
 /node_modules
 /app/yarn.lock
+/app/main.prod.js.map
+/app/main.prod.js
 .lock-wscript
 
 /client/app/node_modules
@@ -32,7 +34,7 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 .
-
+.idea
 # OSX
 .DS_Store
 
