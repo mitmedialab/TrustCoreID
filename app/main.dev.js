@@ -66,11 +66,14 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
+    webPreferences: {
+      webSecurity: false
+    },
     width: 1024,
     height: 728
   });
 
-  mainWindow.loadURL(`file://${__dirname}/frontend/app.html`);
+  mainWindow.loadURL('file://'+__dirname+'/app.html');
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
