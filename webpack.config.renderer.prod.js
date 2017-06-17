@@ -15,7 +15,9 @@ export default merge.smart(baseConfig, {
 
   target: 'electron-renderer',
 
-  entry: ['babel-polyfill', './app/frontend/index'],
+  entry: [
+    'babel-polyfill',
+    path.join(__dirname, 'app/frontend/index.js')],
 
   output: {
     path: path.join(__dirname, 'app/dist'),
@@ -44,39 +46,7 @@ export default merge.smart(baseConfig, {
               localIdentName: '[name]__[local]__[hash:base64:5]',
             }
           }
-        }),
-      },
-      // Add SASS support  - compile all .global.scss files and pipe it to style.css
-      {
-        test: /\.global\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader'
-            },
-            {
-              loader: 'sass-loader'
-            }
-          ],
-          fallback: 'style-loader',
         })
-      },
-      // Add SASS support  - compile all other .scss files and pipe it to style.css
-      {
-        test: /^((?!\.global).)*\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-            }
-          },
-          {
-            loader: 'sass-loader'
-          }]
-        }),
       },
       // WOFF Font
       {
@@ -152,7 +122,7 @@ export default merge.smart(baseConfig, {
     /**
      * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
      */
-    new BabiliPlugin(),
+   // new BabiliPlugin(),
 
     new ExtractTextPlugin('style.css'),
 
