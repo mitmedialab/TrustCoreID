@@ -1,15 +1,14 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import NewDocumentComponent from '../components/documents/NewDocument';
+import * as NewDocumentActions from '../actions/newDocument';
 
 function mapStateToProps(state) {
-  return {
-    counter: state.counter
-  };
+    return state.newdoc
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+    return bindActionCreators(NewDocumentActions, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewDocumentComponent);
