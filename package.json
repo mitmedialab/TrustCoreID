@@ -97,6 +97,7 @@
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "pouchdb": "^6.2.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",
@@ -114,6 +115,7 @@
     "yarn": ">=0.21.3"
   },
   "devDependencies": {
+    "@trust/json-document": "^0.1.4",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
