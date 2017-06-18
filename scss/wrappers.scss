@@ -14,7 +14,6 @@
   }
 }
 
-
 .item {
   display: block;
   margin: $base-spacer 0;
@@ -22,7 +21,6 @@
   border: 1px solid $gray-lightest;
   border-left: 2px solid $accent;
 }
-
 
 .listItem {
   display: block;
@@ -45,6 +43,25 @@
     font-size: 12px;
     word-break: break-all;
     padding: $base-spacer;
+  }
+
+}
+
+.selection {
+  display: block;
+  padding-left: 0;
+
+  li {
+    list-style: none;
+    padding: $base-spacer;
+    border-left: 2px solid $gray-lightest;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $gray-lightest;
+      border-left-color: $action-primary;
+    }
+
   }
 
 }

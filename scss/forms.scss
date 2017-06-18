@@ -10,6 +10,22 @@ label {
 
 }
 
+select {
+  width: 100%;
+  border: 0 none;
+  border-bottom: 1px solid $gray-lighter;
+  padding: $base-spacer 0;
+  margin-bottom: $base-spacer*4;
+  font-size: 16px;
+  color: $gray-light;
+  font-weight: 100;
+  outline: none;
+  transition: all 400ms;
+  -webkit-appearance: none;
+  background-color: $white;
+
+}
+
 input {
   width: 100%;
   border: 0 none;

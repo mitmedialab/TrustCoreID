@@ -8,6 +8,20 @@ label {
   font-weight: 900;
 }
 
+select {
+  width: 100%;
+  border: 0 none;
+  border-bottom: 1px solid #eceeef;
+  padding: 5px 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #636c72;
+  font-weight: 100;
+  outline: none;
+  transition: all 400ms;
+  background-color: #fff;
+}
+
 input {
   width: 100%;
   border: 0 none;
@@ -432,6 +446,23 @@ div#wrapper, .smiley div {
   font-size: 12px;
   word-break: break-all;
   padding: 5px;
+}
+
+.selection {
+  display: block;
+  padding-left: 0;
+}
+
+.selection li {
+  list-style: none;
+  padding: 5px;
+  border-left: 2px solid #f7f7f9;
+  cursor: pointer;
+}
+
+.selection li:hover {
+  background-color: #f7f7f9;
+  border-left-color: #0277BD;
 }
 
 .btn {
