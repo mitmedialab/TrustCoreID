@@ -93,6 +93,9 @@
     }
   },
   "dependencies": {
+    "@trust/jose": "^0.3.0",
+    "@trust/keyto": "^0.3.0",
+    "@trust/webcrypto": "^0.2.1",
     "concurrently": "^3.4.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
