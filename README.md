@@ -9,18 +9,18 @@ This collaboration is for the purpose of creating and demonstrating the potentia
 
 ### The Technical Research Context 
 
-This collaboration is intended to develop and demonstrate the following technical capabilities: 
+This collaboration is intended to develop and demonstrate the following technical capabilities:     
 
- 1. shared key material for use on- and off-chain, with private keys remaining entirely in principal’s possession
+ 1. shared key material for use on- and off-chain, with private keys remaining entirely in principal’s possession    
  
- 2. utility and limitations of tamperproof ledgers for identity
+ 2. utility and limitations of tamperproof ledgers for identity    
  
- 3. evidentiary usage of cryptographic signatures 
+ 3. evidentiary usage of cryptographic signatures     
  
- 4. value of intermediaries for binding real world identities to cryptographic key material
+ 4. value of intermediaries for binding real world identities to cryptographic key material    
  
- 5. third-party verified attributes/blind attestations
- 
+ 5. third-party verified attributes/blind attestations    
+   
 ### The law.MIT.edu Research Context 
 
 This collaboration is intended to apply and test the capabilities of the above technology in the context of meeting the following business and legal goals: 
