@@ -106,6 +106,7 @@ class RegistrationRequest extends BaseRequest {
       .then(() => request.certifyPublicKey())
       .then(() => request.register())
       .then(() => request.createActivityFeed())
+      .then(() => request.indexEmailHash())
       .then(() => request.respond())
       .catch(err => request.error(err))
   }
@@ -167,6 +168,7 @@ class RegistrationRequest extends BaseRequest {
     })
     .then(cert => {
       this.cert = cert
+      this.user.cert = cert
     })
   }
 
@@ -189,10 +191,21 @@ class RegistrationRequest extends BaseRequest {
    */
   createActivityFeed () {
     let { service: { users }, user } = this
-    let db = `${users.name}-${user._id}`
+    let db = `${ process.env.COUCH_URL }/users-${ user._id }`
     let feed = new PouchDB(db, couch)
 
-    return feed.post({ created: Date.now() })
+    feeds[user._id] = feed
+
+    return feed.post({ msg: 'Welcome to your cryptographic life', created: Date.now() }).then(console.log).catch(console.log)
+  }
+
+  /**
+   * indexEmailHash
+   */
+  indexEmailHash () {
+    let { service: { emailIndex }, user } = this
+
+    return emailIndex.post({ _id: user.email, user_id: user._id })
   }
 
   /**
@@ -281,12 +294,13 @@ keys.rotate()
 /**
  * CouchDb Client
  */
-let users = new PouchDB(process.env.COUCH_USERS, couch)
+let users = new PouchDB(`${ process.env.COUCH_URL }/users`, couch)
+let emailIndex = new PouchDB(`${ process.env.COUCH_URL }/emails`, couch)
 
 /**
  * Instantiate Services
  */
-let accounts = AccountService.create({}, { server, express, users, keys })
+let accounts = AccountService.create({}, { server, express, users, emailIndex, keys })
 // moar ...
 
 /**
@@ -308,7 +322,61 @@ server.get('/', (req, res) => {
   res.send(disclaimer)
 })
 
+let feeds = {}
+
 /**
  * Start Server
  */
-server.listen(process.env.PORT || 5150)
+server.listen(process.env.PORT || 5150, () => {
+  users.allDocs().then(({rows}) => {
+    rows.forEach(user => {
+      let db = `${ process.env.COUCH_URL }/users-${user.id}`
+      let feed = new PouchDB(db, couch)
+
+      feeds[user.id] = feed
+    })
+
+    Object.keys(feeds).forEach(key => {
+      let feed = feeds[key]
+
+      feed.changes({
+        live: true,
+        include_docs: true
+      })
+      .on('change', ({doc}) => {
+
+        if (doc && doc.to && doc.status === 'borked') {
+
+          // look up recipient id
+          emailIndex
+            .get(doc.to)
+            .catch(err => {
+                throw new Error('NO USER WITH THAT EMAIL')
+            })
+            .then(index => {
+              return index.user_id
+            })
+
+            // insert message to recipient's feed
+            .then(id => {
+              doc.status = 'notborked'
+              return feeds[id].post(doc).then(() => {
+
+                // update sender's feed
+                return feed.put(doc)
+              })
+            })
+
+            // catch
+            .catch(err => {
+              if (err.message === 'NO USER WITH THAT EMAIL') {
+                console.log('SKIPPING')
+              }
+            })
+        }
+      })
+    })
+
+
+  })
+})
