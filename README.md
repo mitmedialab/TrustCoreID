@@ -9,8 +9,9 @@ This collaboration is for the purpose of creating and demonstrating the potentia
 
 ### The Technical Research Context 
 
-This collaboration is intended to develop and demonstrate the following technical capabilities:     
+This collaboration is intended to develop and demonstrate the following technical capabilities:       
 
+ 
  1. shared key material for use on- and off-chain, with private keys remaining entirely in principal’s possession    
  
  2. utility and limitations of tamperproof ledgers for identity    
