@@ -105,6 +105,7 @@
     "express": "^4.15.3",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "node-fetch": "^1.7.1",
     "pouchdb": "^6.2.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
