@@ -19,6 +19,7 @@ select {
   font-weight: 100;
   outline: none;
   transition: all 400ms;
+  -webkit-appearance: none;
   background-color: #fff;
 }
 
@@ -479,6 +480,7 @@ div#wrapper, .smiley div {
 .btn-primary {
   background-color: #0277BD;
   color: #fff;
+  display: inline-block;
 }
 
 .btn-primary:hover {

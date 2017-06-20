@@ -47,19 +47,18 @@ export default {
                 vin: {
                     type: 'string',
                     description: 'Vehicle Identification Number'
-                }
-            },
-            cons: {
-                type: "object",
-                description: "Consideration",
-                properties: {
-                    price: {
-                        type: 'number',
-                        description: 'Price'
+                },
+                cons: {
+                    type: "object",
+                    description: "Consideration",
+                    properties: {
+                        price: {
+                            type: 'number',
+                            description: 'Price'
+                        }
                     }
                 }
-            }
-
+            },
         },
 
         required: []

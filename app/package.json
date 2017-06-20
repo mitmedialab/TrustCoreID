@@ -14,8 +14,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@trust/jose": "^0.3.0",
-    "@trust/keyto": "^0.3.0",
-    "@trust/webcrypto": "^0.2.1"
+
   }
 }

@@ -34,10 +34,9 @@ export default class NewDocument extends Component {
 
         if (this.state.schema && !this.schemaComponents) {
             const getSchemaComponents = (schema, path = 'schema') => {
-                console.log('going into', schema);
                 return (
-                    <span key={parent}>
-                    <div className="header">{schema.description}</div>
+                    <span key={path}>
+                        <div className="header">{schema.description}</div>
                         {
                             Object.keys(schema.properties).map((item, index)=> {
                                 if (schema.properties[item].type === 'object') {
@@ -50,8 +49,10 @@ export default class NewDocument extends Component {
                                 }
                             })
                         }
-                </span>)
-            }
+                    </span>
+                )
+            };
+
             this.schemaComponents = getSchemaComponents(this.state.schema)
         }
 
@@ -60,6 +61,11 @@ export default class NewDocument extends Component {
                 <div className="container white">
                     <h4>{this.state.schema.title}</h4>
                     {this.schemaComponents}
+                    <div className="text-right">
+                        <span className="btn btn-primary" onClick={ () => {this.props.sign(this.state.data)}}>
+                            <i className="fa fa-check"></i>Sign
+                        </span>
+                    </div>
                 </div>
             )
         } else {
@@ -78,6 +84,7 @@ export default class NewDocument extends Component {
                                         key={index}>{item.title}</li>)
                         })}
                     </ul>
+
                 </div>
             );
         }

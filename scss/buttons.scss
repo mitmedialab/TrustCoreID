@@ -4,6 +4,7 @@
 
   background-color: $background;
   color: $foreground;
+  display: inline-block;
 
   &:hover {
     background-color: lighten($background, 5%);

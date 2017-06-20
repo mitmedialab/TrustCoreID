@@ -93,7 +93,6 @@
     }
   },
   "dependencies": {
-    "concurrently": "^3.4.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
@@ -107,7 +106,11 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "@trust/jose": "^0.3.0",
+    "@trust/keyto": "^0.3.0",
+    "@trust/webcrypto": "^0.2.1",
+    "@trust/json-document": "^0.1.4"
   },
   "devEngines": {
     "node": ">=6.x",
@@ -115,7 +118,6 @@
     "yarn": ">=0.21.3"
   },
   "devDependencies": {
-    "@trust/json-document": "^0.1.4",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
