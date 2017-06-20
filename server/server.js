@@ -148,14 +148,15 @@ class RegistrationRequest extends BaseRequest {
     let { body: { jwk } } = req
     let { keys: { certs } } = service
     let cryptoKey = certs.privateKey
+    let issuer = `http://${ process.env.HOST }:${ process.env.PORT || 5150 }`
 
     return JWT.sign({
       header: {
         alg: 'KS256',
-        jku: 'https://example.com/jwks'
+        jku: `${issuer}/jwks`
       },
       payload: {
-        iss: 'Ye auld CA',
+        iss: issuer,
         sub: 'hashofemail?',
         jwk: this.req.body.jwk,
         iat: Math.floor(Date.now() / 1000),
