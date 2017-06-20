@@ -93,11 +93,16 @@
     }
   },
   "dependencies": {
+    "@trust/http-service": "^0.1.0",
     "@trust/jose": "^0.3.0",
+    "@trust/keychain": "github:anvilresearch/keychain#ecdsa-secp256k1-keys",
     "@trust/keyto": "^0.3.0",
     "@trust/webcrypto": "^0.2.1",
+    "body-parser": "^1.17.2",
     "concurrently": "^3.4.0",
+    "dotenv": "^4.0.0",
     "electron-debug": "^1.1.0",
+    "express": "^4.15.3",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "pouchdb": "^6.2.0",
