@@ -2,6 +2,7 @@
  * Dependencies
  */
 const fs = require('fs')
+const fetch = require('node-fetch')
 const keyto = require('@trust/keyto')
 const crypto = require('@trust/webcrypto')
 const { JWD } = require('@trust/jose')
@@ -184,7 +185,18 @@ class UnsafeWallet {
    * @description
    * Register a public key with a provider to object a certificated key.
    */
-  registerPublicKey (provider) {}
+  registerPublicKey (options) {
+    let { provider, registration } = options
+
+    return fetch(`${provider}/account/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(Object.assign({}, registration, { jwk: this.publicJwk }))
+    })
+    .then(res => res.json())
+  }
 
   /**
    * registerProvider
@@ -262,6 +274,13 @@ module.exports = UnsafeWallet
 
 //Promise.resolve()
 //  .then(() => UnsafeWallet.open())
-//  .then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
+//  .then(wallet => wallet.registerPublicKey({
+//    provider: 'http://localhost:5150',
+//    registration: {
+//      name: '1337 H4x0r',
+//      email: 'p0wn3d@yomama.io'
+//    }
+//  }))
+//  //.then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
 //  .then(console.log)
 //  .catch(console.error)
