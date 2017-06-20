@@ -12,10 +12,14 @@ This collaboration is for the purpose of creating and demonstrating the potentia
 This collaboration is intended to develop and demonstrate the following technical capabilities: 
 
  1. shared key material for use on- and off-chain, with private keys remaining entirely in principal’s possession
- 2. utility and limitations of tamperproof ledgers for identity
- 3. evidentiary usage of cryptographic signatures 
- 4. value of intermediaries for binding real world identities to cryptographic key material
- 5. third-party verified attributes/blind attestations
+ 
+ 2. utility and limitations of tamperproof ledgers for identity
+ 
+ 3. evidentiary usage of cryptographic signatures 
+ 
+ 4. value of intermediaries for binding real world identities to cryptographic key material
+ 
+ 5. third-party verified attributes/blind attestations
  
 ### The law.MIT.edu Research Context 
 
@@ -23,9 +27,13 @@ This collaboration is intended to apply and test the capabilities of the above t
 
 
 1. Test the technology in the contextof achieving the aims and objectives described in the "CoreID" MIT Media Lab/law.MIT.edu research statement: https://law.mit.edu/blog/core-identity-blockchain-project
+
 2. Test the unique potential of US Federal Credit Unions to play the role of individual identity and personal data fiduciary agent of people through the following Use Case: https://github.com/mitmedialab/CoreID/blob/master/CreditUnionUseCase.md and  https://github.com/alexfigtree/CoreID/wiki/Content-and-Actions-Model
+
 3. Establish a basis for achieving predictable legal results with this technology in the [context of commercial contracts for the sale of goods](https://github.com/mitmedialab/law.MIT.edu/blob/gh-pages/MockTrial/README.md)
+
 4. Establish readiness, value and fit of this technology in [identified business and legal contexts](https://github.com/mitmedialab/CoreID/blob/master/diagrams/README.md)
+
 5. Create a re-usable set of business and legal tools enabling more efficient and effective adoption, use and advancement of this technoligy. 
 
 ## This is an Experiment in Open Collaboration
