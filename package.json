@@ -22,6 +22,7 @@
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
+    "rebuild": "electron-rebuild -f",
     "css": "node-sass --output-style expanded --source-map true --precision 6 scss/main.scss app/frontend/app.global.css"
   },
   "browserslist": "electron 1.6",
@@ -151,6 +152,7 @@
     "electron": "^1.6.11",
     "electron-builder": "^19.4.2",
     "electron-devtools-installer": "^2.2.0",
+    "electron-rebuild": "^1.5.11",
     "enzyme": "^2.8.2",
     "enzyme-to-json": "^1.5.1",
     "eslint": "^4.0.0",
@@ -172,6 +174,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
     "jsdom": "^11.0.0",
+    "leveldown": "^1.7.2",
     "minimist": "^1.2.0",
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.0.2",
