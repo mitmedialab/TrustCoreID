@@ -2,24 +2,17 @@ import List from '../components/list/List';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as ListPageActions from '../actions/listPage';
 
 
 function mapStateToProps(state) {
     return {
-        list: state.items.list.reduce((memo, item) => {
-            let index = (item.atr.signatures && item.atr.signatures.length > 0) ? 3 : 0;
-            memo[index].push(item);
-            return memo;
-        }, {0: [], 1: [], 2: [], 3: [], 4: []})
+        list: state.items.list
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        _sign: (item) => {
-            console.log(crypto.sign);
-        }
-    };
+    return bindActionCreators(ListPageActions, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

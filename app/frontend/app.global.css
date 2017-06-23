@@ -19,6 +19,7 @@ select {
   font-weight: 100;
   outline: none;
   transition: all 400ms;
+  -webkit-appearance: none;
   background-color: #fff;
 }
 
@@ -67,6 +68,20 @@ a {
 .button:hover {
   background-color: #0287d6;
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+}
+
+.link {
+  margin-right: 5px;
+  color: #0277BD;
+  cursor: pointer;
+}
+
+.link .fa {
+  margin-right: 5px;
+}
+
+.link.danger {
+  color: #d9403d;
 }
 
 .m-1 {

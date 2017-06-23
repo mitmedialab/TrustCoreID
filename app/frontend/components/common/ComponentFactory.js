@@ -34,6 +34,13 @@ class ComponentFactory {
             lastRef = lastRef[item] = lastRef[item] || {};
         });
 
+        if (element.default) {
+            let ref = this.state.data;
+            splits.forEach((item) => {
+                ref = ref[item]
+            });
+            ref[name] = element.default
+        }
 
         const onChange = (path)=> {
 
@@ -55,7 +62,6 @@ class ComponentFactory {
                 });
                 ref[name] = convert(e.target.value);
 
-                console.log('--', ref, this.state.data)
                 this.setState(this.state);
             }
         };

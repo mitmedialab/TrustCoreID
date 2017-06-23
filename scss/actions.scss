@@ -25,3 +25,19 @@ a {
     box-shadow: 0 0 6px 1px rgba(0,0,0,0.4);
   }
 }
+
+.link {
+
+  margin-right: $base-spacer;
+  color: $action-primary;
+  cursor: pointer;
+
+  .fa {
+    margin-right: $base-spacer;
+  }
+
+  &.danger {
+    color: $red;
+  }
+
+}

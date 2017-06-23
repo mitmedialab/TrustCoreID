@@ -4,7 +4,9 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
+import * as anonActions from '../actions/anon';
+import * as listPageActions from '../actions/listPage';
+import * as newDocumentActions from '../actions/newDocument';
 
 const history = createHashHistory();
 
@@ -29,8 +31,10 @@ const configureStore = (initialState) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
-    ...routerActions,
+    ...anonActions,
+    ...listPageActions,
+    ...newDocumentActions,
+    ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
@@ -54,6 +58,8 @@ const configureStore = (initialState) => {
       store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
     );
   }
+
+ // anonActions.fakeLogin(store.dispatch);
 
   return store;
 };
