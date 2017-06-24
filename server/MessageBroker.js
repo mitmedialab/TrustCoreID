@@ -129,7 +129,7 @@ class MessageBroker {
     let { feeds, lookup } = this
 
     return lookup.get(recipient)
-      .then(({id}) => feeds[id].post(doc))
+      .then(({user_id}) => feeds[user_id].post(doc))
   }
 
   /**
