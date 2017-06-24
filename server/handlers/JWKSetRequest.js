@@ -1,6 +1,7 @@
 /**
  * Dependencies
  */
+const debug = require('debug')('trust:http:jwks')
 const { BaseRequest } = require('@trust/http-service')
 
 /**
@@ -40,6 +41,7 @@ class JWKSetRequest extends BaseRequest {
   static handle (req, res, service) {
     res.type('json')
     res.send(service.keys.jwkSet)
+    debug('jwks response %O', service.keys.jwkSet)
   }
 
 }

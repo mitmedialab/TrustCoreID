@@ -1,6 +1,7 @@
 /**
  * Dependencies
  */
+const debug = require('debug')('trust:http:register')
 const { JWT } = require('@trust/jose')
 const { BaseRequest } = require('@trust/http-service')
 
@@ -80,6 +81,7 @@ class RegistrationRequest extends BaseRequest {
    */
   validate () {
     let { req: { body } } = this
+    debug('validating')
 
     if (!body.name) {
       return this.badRequest({
@@ -114,6 +116,7 @@ class RegistrationRequest extends BaseRequest {
     let { keys: { certs } } = service
     let cryptoKey = certs.privateKey
     let issuer = `http://${ process.env.HOST }:${ process.env.PORT || 5150 }`
+    debug('certificating public key')
 
     return JWT.sign({
       header: {
@@ -133,6 +136,7 @@ class RegistrationRequest extends BaseRequest {
     .then(cert => {
       this.cert = cert
       this.user.cert = cert
+      debug('certificated public key')
     })
   }
 
@@ -142,11 +146,13 @@ class RegistrationRequest extends BaseRequest {
   register () {
     let { req, service, user, cert } = this
     let { couch, users } = service
+    debug('registering user')
 
     return users.post(user).then(result => {
       let { id: _id, rev: _rev } = result
 
       this.user = Object.assign({ _id, _rev }, user, { cert })
+      debug('created user %o', this.user)
     })
   }
 
@@ -155,6 +161,7 @@ class RegistrationRequest extends BaseRequest {
    */
   createActivityFeed () {
     let { service: { broker }, user } = this
+    debug('creating feed')
 
     return broker.openFeed(user).then(feed => {
       feed.post({
@@ -169,8 +176,13 @@ class RegistrationRequest extends BaseRequest {
    */
   indexEmailHash () {
     let { service: { emailIndex }, user } = this
+    debug('indexing user %s by email %s', user._id, user.email)
 
-    return emailIndex.post({ _id: user.email, user_id: user._id })
+    return emailIndex.put({
+      _id: user.email,
+      user_id: user._id
+    })
+    .catch(err => debug('uh oh, indexing by email failed %o', err))
   }
 
   /**

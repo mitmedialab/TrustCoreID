@@ -2,6 +2,7 @@
  * Dependencies
  */
 require('dotenv').config()
+const debug = require('debug')('trust:server')
 const express = require('express')
 const PouchDB = require('pouchdb')
 const bodyParser = require('body-parser')
@@ -58,7 +59,9 @@ server.use(bodyParser.json())
  */
 let keys = new KeyChain({
   certs: { alg: 'KS256' }
-}).rotate()
+})
+
+keys.rotate().then(() => debug('rotated keys'))
 
 /**
  * CouchDb Client
@@ -73,7 +76,9 @@ let broker = new MessageBroker({
   users,
   lookup: emailIndex,
   couch
-}).bootstrap()
+})
+
+broker.bootstrap().then(() => debug('booted message broker'))
 
 /**
  * Instantiate Services
@@ -97,4 +102,4 @@ server.get('/', (req, res) => {
 /**
  * Start Server
  */
-server.listen(process.env.PORT || 5150)
+server.listen(process.env.PORT || 5150, () => debug(`started`))

@@ -1,6 +1,7 @@
 /**
  * Dependencies
  */
+const debug = require('debug')('trust:broker')
 const PouchDB = require('pouchdb')
 
 /**
@@ -34,6 +35,8 @@ class MessageBroker {
   bootstrap () {
     let { users, couch } = this
 
+    debug('bootstrapping')
+
     // fetch all the users
     return users.allDocs()
 
@@ -64,8 +67,10 @@ class MessageBroker {
       this.dispatch(feed, event)
     })
 
-    // keep a reference in memory and return feed
-    return this.feeds[id] = feed
+    // keep a reference in memory
+    this.feeds[id] = feed
+    debug('opened feed %s', id)
+    return Promise.resolve(feed)
   }
 
   /**
@@ -84,6 +89,8 @@ class MessageBroker {
     // new message
     if (doc.to && !doc.sent) {
       let recipients = this.normalizeRecipients(doc.to)
+
+      debug('dispatching %s to %O', doc._id, recipients)
 
       // mark as sent
       doc.sent = new Date()
