@@ -71,7 +71,8 @@ class UnsafeWallet {
    */
   save () {
     return this.exportKeypair().then(data => {
-      fs.writeFileSync(WALLET_FILE, JSON.stringify(data, null, 2))
+      let serialized = JSON.stringify(Object.assign({}, this, data), null, 2)
+      fs.writeFileSync(WALLET_FILE, serialized)
       return this
     })
   }
@@ -196,6 +197,11 @@ class UnsafeWallet {
       body: JSON.stringify(Object.assign({}, registration, { jwk: this.publicJwk }))
     })
     .then(res => res.json())
+    .then(user => {
+      Object.assign(this, user)
+    })
+    .then(() => this.save())
+
   }
 
   /**
@@ -282,5 +288,5 @@ module.exports = UnsafeWallet
 //    }
 //  }))
 //  //.then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
-//  .then(console.log)
+//  //.then(wallet => console.log(wallet.privateJwk))
 //  .catch(console.error)
