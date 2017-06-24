@@ -16,7 +16,7 @@ export default class NewDocument extends Component {
         this.state = {
             search: '',
             name: 'Untitled-'+Math.round(Math.random()*1e4),
-            recipients: 'bob@email.com',
+            recipients: '',
             data: {}
         };
 

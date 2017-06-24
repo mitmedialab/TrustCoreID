@@ -33,6 +33,10 @@ class ListItem extends React.Component {
                 )
             } else {
                 return (<span className="float-right">
+                    <span className="link" onClick={this.props.send}>
+                        <i className="fa fa-arrow-right"></i>
+                        Send
+                    </span>
                     <span className="link danger" onClick={this.props.remove}>
                         <i className="fa fa-remove"></i>
                         Delete

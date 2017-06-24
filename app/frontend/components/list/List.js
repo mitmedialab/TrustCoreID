@@ -22,6 +22,7 @@ export default class List extends Component {
                     <div className={styles.group}>
                         {data.map((item, index) => {
                             return <ListItem key={index} item={item}
+                                             send={ ()=> {this.props.send(item)}}
                                              sign={ ()=> {this.props.sign(item)}}
                                              remove={ ()=> {this.props.remove(item)}} />
                         })}

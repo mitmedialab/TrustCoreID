@@ -8,6 +8,9 @@ import * as anonActions from '../actions/anon';
 import * as listPageActions from '../actions/listPage';
 import * as newDocumentActions from '../actions/newDocument';
 
+
+const {Storage, Wallet} = require('electron').remote.require('./backend');
+
 const history = createHashHistory();
 
 const configureStore = (initialState) => {
@@ -59,7 +62,16 @@ const configureStore = (initialState) => {
     );
   }
 
- // anonActions.fakeLogin(store.dispatch);
+  Promise.resolve()
+      .then(() => Wallet.open())
+      .then(wallet => {
+        store.dispatch({type: 'USER_DATA', payload: {email: wallet.email, id: wallet._id}});
+        Storage.open(wallet._id).then(storage => {
+          storage.list().then(data => {
+            store.dispatch({type: 'DOCUMENTS', payload: data});
+          })
+        })
+      });
 
   return store;
 };

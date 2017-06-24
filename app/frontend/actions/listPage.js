@@ -1,5 +1,16 @@
-const {Storage, documentStore, Wallet} = require('electron').remote.require('./backend');
+const {Storage, Wallet} = require('electron').remote.require('./backend');
 import {refreshDocumentList,ids} from './anon';
+
+
+export function send(item) {
+   return (dispatch) => {
+       Storage.open().then(store => {
+          store.putToFeed(item).then(item => {
+              //dispatch
+          })
+       });
+   }
+}
 
 export function sign(item) {
 
@@ -32,18 +43,18 @@ export function sign(item) {
             .then(doc => {
                 refreshDocumentList(dispatch, 2);
             })
-        .catch( err => {
-            refreshDocumentList(dispatch, 2);
-        })
+            .catch(err => {
+                refreshDocumentList(dispatch, 2);
+            })
     }
 }
 
 export function remove(item) {
 
     return (dispatch) => {
-        documentStore().remove(item).then(()=> {
+        Storage.open().then(documentStore => documentStore.remove(item).then(()=> {
             refreshDocumentList(dispatch, 1);
-        })
+        }))
 
     }
 }

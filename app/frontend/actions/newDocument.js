@@ -1,7 +1,7 @@
 import uuid4 from 'uuid4';
 import {push} from 'react-router-redux'
 import {refreshDocumentList} from './anon';
-const {documentStore} = require('electron').remote.require('./backend');
+const {Storage} = require('electron').remote.require('./backend');
 
 
 export const SELECT_DOCUMENT = 'SELECT_DOCUMENT';
@@ -29,9 +29,12 @@ export function save(name, from, payload, receip) {
         payload: payload
     };
 
+
     return (dispatch) => {
-        documentStore().put(document).then( () => {
-            refreshDocumentList(dispatch, 1);
+        Storage.open().then(storage => {
+            storage.put(document).then(() => {
+                refreshDocumentList(dispatch, 1);
+            })
         });
 
     }
