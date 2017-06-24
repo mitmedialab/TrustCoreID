@@ -16,7 +16,7 @@ export default class LeftNav extends Component {
     render() {
 
         const getCountFor = (index) => {
-            return this.props.list[index] ? this.props.list[index].length : 0;
+            return this.props.list && this.props.list[index] ? this.props.list[index].length : 0;
         };
 
         const isSelected = (index) => {

@@ -6,11 +6,7 @@ import { connect } from 'react-redux';
 function mapStateToProps(state) {
 
     return {
-        list: state.items.list.reduce((memo, item) => {
-            let index = (item.atr.signatures && item.atr.signatures.length > 0) ? 3 : 0;
-            memo[index].push(item);
-            return memo;
-        }, {0: [], 1: [], 2: [], 3: [], 4: []}),
+        list: state.items.list,
         router: state.router
     };
 }

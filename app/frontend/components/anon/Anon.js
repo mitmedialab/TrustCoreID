@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './Anon.css';
 
 export default class Anon extends Component {
@@ -8,7 +7,9 @@ export default class Anon extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            panel: 0
+            panel: 0,
+            email: '',
+            password: ''
         }
     }
 
@@ -19,9 +20,14 @@ export default class Anon extends Component {
                     <div className={styles.container}>
                         <h1>Core ID</h1>
 
-                        <input name="username" type="text" placeholder="Email Address"/>
+                        <input name="username"
+                               value={this.state.email}
+                               onChange={(e)=>{
+                                    this.setState({email: e.target.value});
+                               }}
+                               type="text" placeholder="Email Address"/>
                         <input name="password" type="password" placeholder="Password"/>
-                        <Link to="/runtime/documents/0"><div className="button full">Login</div></Link>
+                        <div className="button full" onClick={()=>{this.props.login(this.state.email, 0)}}>Login</div>
                         <div className="text-center">
                             Don't have an account? <a onClick={ () => {this.setState({panel: 1})}}>Sign Up</a>
                         </div>

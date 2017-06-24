@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './List.css';
 import PayloadItem from '../common/PayloadItem';
+import ReactJson from 'react-json-view'
 
 class ListItem extends React.Component {
 
@@ -17,14 +18,26 @@ class ListItem extends React.Component {
     render() {
 
         const getSuffix = () => {
-            if (this.props.item.atr.signatures) {
-                return (<span className="float-right">
+            if (this.props.item.signatures) {
+                return (
+                    <span className="float-right">
                     <i className="fa fa-key"></i>
-                    {this.props.item.atr.signatures.length}
-                </span>)
+                        {this.props.item.signatures.length}
+
+                        {this.props.item.signatures.length < this.props.item.to.length+1 ?
+                            (<span className="link" onClick={this.props.sign}>
+                        <i className="fa fa-check"></i>
+                        Sign
+                    </span>) : ''}
+                </span>
+                )
             } else {
                 return (<span className="float-right">
-                    <span onClick={this.props.sign}>
+                    <span className="link danger" onClick={this.props.remove}>
+                        <i className="fa fa-remove"></i>
+                        Delete
+                    </span>
+                    <span className="link" onClick={this.props.sign}>
                         <i className="fa fa-check"></i>
                         Sign
                     </span>
@@ -37,13 +50,16 @@ class ListItem extends React.Component {
             if (!this.state.expanded)
                 return;
 
-            let payload = this.props.item.atr.payload.constructor === Array ?
-                this.props.item.atr.payload : [this.props.item.atr.payload];
+            //let payload = this.props.item.payload.constructor === Array ?
+            //    this.props.item.payload : [this.props.item.payload];
+            console.log(this.props.item);
 
             return (
                 <div>
+                    <label>To</label>
+                    {this.props.item.to.join(',')}
                     <label>Signatures</label>
-                    {this.props.item.atr.signatures ? this.props.item.atr.signatures.map((signature, index) => {
+                    {this.props.item.signatures ? this.props.item.signatures.map((signature, index) => {
                         return (
                             <div key={index}>
                                 <div className="listItem">
@@ -67,11 +83,7 @@ class ListItem extends React.Component {
                     }) : undefined}
 
                     <label>Payload</label>
-                    {
-                        payload.map((item, index) => {
-                            return (<PayloadItem item={item} key={index}/>)
-                        })
-                    }
+                    <ReactJson src={this.props.item.payload}/>
                 </div>
             )
         };
@@ -87,11 +99,13 @@ class ListItem extends React.Component {
         };
 
         return (<div className={styles.item}>
-            <div className={styles.summary} onClick={() => {
-                this.setState({expanded: !this.state.expanded});
-            }}>
-                {getPrefix()}
-                {this.props.item.atr.name}
+            <div className={styles.summary}>
+                <span onClick={() => {
+                        this.setState({expanded: !this.state.expanded});
+                    }}>
+                    {getPrefix()}
+                    {this.props.item.name}
+                    </span>
                 {getSuffix()}
             </div>
             {getDetailedView()}
