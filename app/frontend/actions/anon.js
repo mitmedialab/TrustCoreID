@@ -11,6 +11,7 @@ export const USER_DATA = 'USER_DATA';
 export function refreshDocumentList(dispatch, to) {
     Storage.open().then(store => {
         store.list().then(data => {
+            console.log(data);
             dispatch({type: 'DOCUMENTS', payload: data});
             if (to !== undefined) {
                 dispatch(push(`/runtime/documents/${to}`))

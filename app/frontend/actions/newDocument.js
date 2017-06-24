@@ -13,9 +13,8 @@ export function select(item) {
     };
 }
 
-export function save(name, from, payload, receip) {
-
-
+export function save(name, payload, receip) {
+    
     let to = receip.trim().split(',').reduce((memo, item) => {
         memo.push(item.trim());
         return memo;
@@ -25,7 +24,6 @@ export function save(name, from, payload, receip) {
         _id: uuid4(),
         name: name,
         to,
-        from,
         payload: payload
     };
 

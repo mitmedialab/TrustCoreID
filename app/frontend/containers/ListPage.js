@@ -7,7 +7,8 @@ import * as ListPageActions from '../actions/listPage';
 
 function mapStateToProps(state) {
     return {
-        list: state.items.list
+        list: state.items.list,
+        user: state.user
     };
 }
 

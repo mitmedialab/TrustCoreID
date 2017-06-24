@@ -77,7 +77,7 @@ export default class NewDocument extends Component {
                     {this.schemaComponents}
 
                     <div className="text-right">
-                        <span className="btn btn-primary-outline" onClick={()=>{this.props.save(this.state.name, this.props.user.email, this.state.data, this.state.recipients)}}>
+                        <span className="btn btn-primary-outline" onClick={()=>{this.props.save(this.state.name, this.state.data, this.state.recipients)}}>
                             <i className="fa fa-save"  /> Save
                         </span>
                     </div>

@@ -1,15 +1,17 @@
 const {Storage, Wallet} = require('electron').remote.require('./backend');
-import {refreshDocumentList,ids} from './anon';
+import {refreshDocumentList} from './anon';
 
 
-export function send(item) {
-   return (dispatch) => {
-       Storage.open().then(store => {
-          store.putToFeed(item).then(item => {
-              //dispatch
-          })
-       });
-   }
+export function send(item, email) {
+
+    return (dispatch) => {
+        Storage.open().then(store => {
+            let update = Object.assign({}, item, {from: email});
+            store.put(update, true).then(data => {
+                refreshDocumentList(dispatch, 2);
+            })
+        });
+    }
 }
 
 export function sign(item) {
@@ -20,14 +22,16 @@ export function sign(item) {
             .then(wallet => wallet.signDocument(item))
             .then(updated => {
                 let up = JSON.parse(updated);
+
                 if (item.signatures) {
                     up.signatures.push(up.signatures[up.signatures.length - 1]);
                 }
                 let it = Object.assign(item, up);
-                return documentStore().put(JSON.parse(JSON.stringify(it)));
+                return Storage.open().then(store => store.put(JSON.parse(JSON.stringify(it)), true));
             })
             .then(update => {
-                return documentStore().get(update.id);
+                console.log(update);
+
             })
             .then(doc => {
                 let promises = [];
@@ -41,10 +45,10 @@ export function sign(item) {
                 return Promise.all(promises);
             })
             .then(doc => {
-                refreshDocumentList(dispatch, 2);
+                refreshDocumentList(dispatch);
             })
             .catch(err => {
-                refreshDocumentList(dispatch, 2);
+                refreshDocumentList(dispatch);
             })
     }
 }
@@ -53,7 +57,7 @@ export function remove(item) {
 
     return (dispatch) => {
         Storage.open().then(documentStore => documentStore.remove(item).then(()=> {
-            refreshDocumentList(dispatch, 1);
+            refreshDocumentList(dispatch);
         }))
 
     }

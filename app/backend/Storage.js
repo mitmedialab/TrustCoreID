@@ -41,35 +41,34 @@ class Storage {
                 include_docs: true
             })
             .on('change', (update) => {
-                let {doc}= update;
-                console.log('updating', doc);
+                let {doc}= update.doc;
 
-                delete doc['_rev'];
-                this.store.get(doc._id).then(data => {
-                    console.log('found', data);
-                    let updated = Object.assign(data, doc);
-                    this.store.put(updated).then(data => {
-                        console.log(this.callback)
-                        if (this.callback) {
-                            this.callback();
-                        }
-                    }).catch(err=> {
-                        console.log('err', err)
-                    })
-                }).catch(err => {
-                    console.log('err', err);
+                if (doc) {
+
                     delete doc['_rev'];
-                    this.store.put(doc).then(data => {
-                        console.log(this.callback)
-                        if (this.callback) {
-                            this.callback();
-                        }
-                    }).catch(err=> {
-                        console.log('err', err)
-                    })
-                });
-
-                console.log(update);
+                    this.store.get(doc._id).then(data => {
+                        console.log('found', data);
+                        let updated = Object.assign(data, doc);
+                        this.store.put(updated).then(data => {
+                            if (this.callback) {
+                                this.callback();
+                            }
+                        }).catch(err=> {
+                            console.log('err', err)
+                        })
+                    }).catch(err => {
+                        console.log('err', err);
+                        delete doc['_rev'];
+                        this.store.put(doc).then(data => {
+                            console.log(this.callback)
+                            if (this.callback) {
+                                this.callback();
+                            }
+                        }).catch(err=> {
+                            console.log('err', err)
+                        })
+                    });
+                }
             });
 
     }
@@ -78,13 +77,21 @@ class Storage {
         return this.store;
     }
 
-    put(doc) {
-        return this.store.put(doc);
+    put(doc, storeToFeed) {
+        if (storeToFeed) {
+            return this.putToFeed(doc);
+        } else {
+            return this.store.put(doc)
+        }
     }
 
     putToFeed(doc) {
         delete doc._rev;
-        return this.localFeed.put(doc);
+        let updateList = doc.to.concat([doc.from]);
+        updateList.forEach(to=> {
+            return this.localFeed.post({to, from: doc.from, doc});
+        });
+        return Promise.resolve();
     }
 
     get(id) {
