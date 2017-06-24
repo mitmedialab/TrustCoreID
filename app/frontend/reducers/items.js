@@ -11,6 +11,7 @@ export default function items(state = {
             return Object.assign({email: action.payload});
         case 'DOCUMENTS':
             let list = action.payload.rows.reduce((memo, item) => {
+                console.log(item);
                 let document = item.doc;
                 if (document.from === state.email && !document.signatures) {
                     memo[1].push(document);

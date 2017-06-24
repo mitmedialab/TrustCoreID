@@ -14,12 +14,13 @@ let cache;
 
 class Storage {
 
-    static open(id) {
+    static open(id, callback) {
         if (!cache) {
             if (!id) {
                 throw new Error('Storage was not initialized with any id');
             }
             cache = new Storage(id);
+            cache.callback = callback;
         }
 
         return Promise.resolve(cache);
@@ -28,23 +29,53 @@ class Storage {
     constructor(id) {
         this.store = new PouchDB(`documents-${id}`);
         this.localFeed = new PouchDB(`users-${id}`);
+
         this.remoteFeed = new PouchDB(`http://138.197.8.148:5984/users-${id}`, couch);
 
         this.localFeed.sync(this.remoteFeed, {
             live: true
-        }).on('change', function (change) {
-            console.log(change)
-        }).on('error', function (err) {
-            console.log(err);
         });
-        this.localFeed.allDocs({
-            include_docs: true,
-            attachments: true
-        }).then(data => {
-            console.log(data.rows);
-        })
 
+        this.remoteFeed.changes({
+                live: true,
+                include_docs: true
+            })
+            .on('change', (update) => {
+                let {doc}= update;
+                console.log('updating', doc);
 
+                delete doc['_rev'];
+                this.store.get(doc._id).then(data => {
+                    console.log('found', data);
+                    let updated = Object.assign(data, doc);
+                    this.store.put(updated).then(data => {
+                        console.log(this.callback)
+                        if (this.callback) {
+                            this.callback();
+                        }
+                    }).catch(err=> {
+                        console.log('err', err)
+                    })
+                }).catch(err => {
+                    console.log('err', err);
+                    delete doc['_rev'];
+                    this.store.put(doc).then(data => {
+                        console.log(this.callback)
+                        if (this.callback) {
+                            this.callback();
+                        }
+                    }).catch(err=> {
+                        console.log('err', err)
+                    })
+                });
+
+                console.log(update);
+            });
+
+    }
+
+    get localStorage() {
+        return this.store;
     }
 
     put(doc) {
