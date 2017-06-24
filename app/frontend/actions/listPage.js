@@ -22,34 +22,17 @@ export function sign(item) {
             .then(wallet => wallet.signDocument(item))
             .then(updated => {
                 let up = JSON.parse(updated);
-
-                if (item.signatures) {
-                    up.signatures.push(up.signatures[up.signatures.length - 1]);
-                }
-                let it = Object.assign(item, up);
-                return Storage.open().then(store => store.put(JSON.parse(JSON.stringify(it)), true));
-            })
-            .then(update => {
-                console.log(update);
-
-            })
-            .then(doc => {
-                let promises = [];
-                doc.to.forEach(to=> {
-                    let newItem = JSON.parse(JSON.stringify(doc));
-                    newItem._rev = undefined;
-                    let store = new Storage(ids[to]);
-                    promises.push(store.put(newItem))
+                item.signatures = [].concat(item.signatures).concat(up.signatures);
+                Storage.open().then(store => {
+                    store.put(JSON.parse(JSON.stringify(item)), true).then(doc => {
+                            refreshDocumentList(dispatch);
+                        })
+                        .catch(err => {
+                            refreshDocumentList(dispatch);
+                        })
                 });
+            })
 
-                return Promise.all(promises);
-            })
-            .then(doc => {
-                refreshDocumentList(dispatch);
-            })
-            .catch(err => {
-                refreshDocumentList(dispatch);
-            })
     }
 }
 

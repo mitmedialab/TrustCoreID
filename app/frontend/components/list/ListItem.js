@@ -64,26 +64,28 @@ class ListItem extends React.Component {
                     {this.props.item.to.join(',')}
                     <label>Signatures</label>
                     {this.props.item.signatures ? this.props.item.signatures.map((signature, index) => {
-                        return (
-                            <div key={index}>
-                                <div className="listItem">
-                                    <span className="listItemLabel">ISS:</span>
-                                    {signature.protected.iss}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">ALG:</span>
-                                    {signature.protected.alg}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">TYP:</span>
-                                    {signature.protected.typ}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">KID:</span>
-                                    {signature.protected.kid}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">Signature:</span>
-                                    <div className="signature">{signature.signature}</div>
-                                </div>
+                        if (signature && signature.protected) {
+                            return (
+                                <div key={index}>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">ISS:</span>
+                                        {signature.protected.iss}</div>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">ALG:</span>
+                                        {signature.protected.alg}</div>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">TYP:</span>
+                                        {signature.protected.typ}</div>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">KID:</span>
+                                        {signature.protected.kid}</div>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">Signature:</span>
+                                        <div className="signature">{signature.signature}</div>
+                                    </div>
 
-                            </div>)
+                                </div>)
+                        }
                     }) : undefined}
 
                     <label>Payload</label>

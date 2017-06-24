@@ -88,10 +88,11 @@ class Storage {
     putToFeed(doc) {
         delete doc._rev;
         let updateList = doc.to.concat([doc.from]);
+        let promiseArray = [];
         updateList.forEach(to=> {
-            return this.localFeed.post({to, from: doc.from, doc});
+            promiseArray.push(this.localFeed.post({to, from: doc.from, doc}));
         });
-        return Promise.resolve();
+        return Promise.all(promiseArray);
     }
 
     get(id) {
