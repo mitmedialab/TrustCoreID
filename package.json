@@ -94,10 +94,12 @@
   },
   "dependencies": {
     "@trust/jose": "^0.3.0",
-    "@trust/keyto": "^0.3.0",
+    "@trust/keyto": "^0.3.1",
     "@trust/webcrypto": "^0.2.1",
     "concurrently": "^3.4.0",
+    "crypto-js": "^3.1.9-1",
     "electron-debug": "^1.1.0",
+    "ethereumjs-tx": "^1.2.5",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "pouchdb": "^6.2.0",
@@ -110,7 +112,9 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.15"
+    "solc-loader": "^1.1.1",
+    "source-map-support": "^0.4.15",
+    "web3": "https://github.com/shayanb/web3.js#develop"
   },
   "devEngines": {
     "node": ">=6.x",

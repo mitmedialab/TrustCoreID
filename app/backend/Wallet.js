@@ -1,9 +1,11 @@
 /**
  * Dependencies
  */
+const EthereumClient = require('./EthereumClient')
+const crypto = require('crypto');
 const fs = require('fs')
 const keyto = require('@trust/keyto')
-const crypto = require('@trust/webcrypto')
+const webcrypto = require('@trust/webcrypto')
 const { JWD } = require('@trust/jose')
 
 /**
@@ -86,7 +88,7 @@ class UnsafeWallet {
   generateKeypair () {
     let wallet = this
 
-    return crypto.subtle.generateKey(
+    return webcrypto.subtle.generateKey(
       {
         name: 'ECDSA',
         namedCurve: 'K-256',
@@ -113,7 +115,7 @@ class UnsafeWallet {
       return keypair
     })
     .then(keypair => {
-      return crypto.subtle.exportKey('jwk', this.publicCryptoKey).then(jwk => {
+      return webcrypto.subtle.exportKey('jwk', this.publicCryptoKey).then(jwk => {
         this.publicJwk = jwk
         return this
       })
@@ -134,8 +136,8 @@ class UnsafeWallet {
     let algorithm = { name: 'ECDSA', namedCurve: 'K-256', hash: { name: 'SHA-256' } }
 
     return Promise.all([
-      crypto.subtle.importKey('jwk', publicJwk, algorithm, true, ['verify']),
-      crypto.subtle.importKey('jwk', privateJwk, algorithm, true, ['sign'])
+      webcrypto.subtle.importKey('jwk', publicJwk, algorithm, true, ['verify']),
+      webcrypto.subtle.importKey('jwk', privateJwk, algorithm, true, ['sign'])
     ])
     .then(keys => {
       let [publicKey,privateKey] = keys
@@ -169,8 +171,8 @@ class UnsafeWallet {
    */
   exportKeypair () {
     return Promise.all([
-      crypto.subtle.exportKey('jwk', this.publicCryptoKey),
-      crypto.subtle.exportKey('jwk', this.privateCryptoKey)
+      webcrypto.subtle.exportKey('jwk', this.publicCryptoKey),
+      webcrypto.subtle.exportKey('jwk', this.privateCryptoKey)
     ])
     .then(keys => {
       let [publicJwk, privateJwk] = keys
@@ -249,8 +251,10 @@ class UnsafeWallet {
   /**
    * hashAndPutItOnTheBlockchain
    */
-  hashAndPutItOnTheBlockchain () {
-    // because hashAndPutItOnTheBlockchain
+  hashAndPutItOnTheBlockchain (data) {
+    let client = new EthereumClient(this.privateCryptoKey)
+    let hash = crypto.createHash('sha256').update(data).digest('hex')
+    return client.putItOnTheBlockchain(hash)
   }
 
 }
@@ -261,7 +265,8 @@ class UnsafeWallet {
 module.exports = UnsafeWallet
 
 //Promise.resolve()
-//  .then(() => UnsafeWallet.open())
-//  .then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
-//  .then(console.log)
-//  .catch(console.error)
+ //  .then(() => UnsafeWallet.open())
+ //  .then(wallet => wallet.hashAndPutItOnTheBlockchain('foo bar baz'))
+ //  .then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
+ //  .then(console.log)
+ //  .catch(console.error)
