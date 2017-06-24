@@ -26,6 +26,10 @@ const WALLET_FILE = 'unsafe-wallet.json'
  */
 class UnsafeWallet {
 
+  constructor (data = {}) {
+    Object.assign(this, data)
+  }
+
   /**
    * open
    *
@@ -48,7 +52,7 @@ class UnsafeWallet {
       if (!err.code === 'ENOENT') { throw err }
     }
 
-    let wallet = new UnsafeWallet()
+    let wallet = new UnsafeWallet(data)
 
     if (data) {
       return wallet.importKeypair(data)
@@ -289,4 +293,5 @@ module.exports = UnsafeWallet
 //  }))
 //  //.then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
 //  //.then(wallet => console.log(wallet.privateJwk))
+//  .then(console.log)
 //  .catch(console.error)
