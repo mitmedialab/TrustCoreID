@@ -30,6 +30,13 @@ class Storage {
         this.localFeed = new PouchDB(`users-${id}`);
 
         this.remoteFeed = new PouchDB(`http://138.197.8.148:5984/users-${id}`, couch);
+
+        this.localFeed.sync(this.remoteFeed, {
+            live: true
+        }).on('error', function (err) {
+            console.log('Error on sync', err)
+        });
+
         this.localFeed.changes({
                 live: true,
                 since: 'now',
@@ -60,11 +67,12 @@ class Storage {
                         })
                     });
                 }
-            });
-
-        this.localFeed.sync(this.remoteFeed, {
-            live: true
+            }).on('error', function (err) {
+            console.log('Local Feed changes err:', err)
         });
+
+
+
 
 
     }
@@ -82,7 +90,7 @@ class Storage {
                 attachments.forEach(attachment => {
                     doc._attachments[attachment.fileName] = {
                         content_type: attachment.content_type,
-                        data: Buffer.from(attachment.data)
+                        data: attachment.data
                     }
                 })
             }
@@ -99,9 +107,19 @@ class Storage {
         let updateList = doc.to.concat([doc.from]);
         let promiseArray = [];
         updateList.forEach(to=> {
-            promiseArray.push(this.localFeed.post({to, from: doc.from, doc}));
+            let promise = this.localFeed.post({to, from: doc.from, doc});
+            promise.catch(err => {
+                console.log("Error while posting to feed. ", err)
+            });
+            promiseArray.push(promise);
         });
-        return Promise.all(promiseArray);
+        let collection = Promise.all(promiseArray);
+
+        collection.catch(err=> {
+            console.log('###', err);
+        });
+
+        return collection;
     }
 
     get(id) {

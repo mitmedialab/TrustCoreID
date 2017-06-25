@@ -9,6 +9,8 @@ export function send(item, email) {
             let update = Object.assign({}, item, {from: email});
             store.put(update, true).then(data => {
                 refreshDocumentList(dispatch, 2);
+            }).catch(err=> {
+                console.log('error while storing', err);
             })
         });
     }

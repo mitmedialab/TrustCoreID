@@ -40,7 +40,7 @@ export default class NewDocument extends Component {
         var dialog = remote.dialog;
         dialog.showOpenDialog((fileNames) => {
             if (fileNames) {
-                fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+                fs.readFile(fileNames[0], (err, data) => {
                     if (err) {
                         alert("An error ocurred reading the file :" + err.message);
                         return;
