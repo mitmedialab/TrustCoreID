@@ -1,3 +1,4 @@
+const merkle = require('merkle')
 const PouchDB = require('pouchdb');
 /**
  * CouchDB
@@ -86,13 +87,22 @@ class Storage {
             return this.putToFeed(doc);
         } else {
             if (attachments) {
+                let files = []
+
                 doc._attachments = {};
                 attachments.forEach(attachment => {
+
+                    let filename = attachement.fileName
+                    files.push(attachment.fileName)
+
                     doc._attachments[attachment.fileName] = {
                         content_type: attachment.content_type,
                         data: attachment.data
                     }
                 })
+
+                let tree = merkle('sha256').sync(files)
+                doc.payload.merkleRoot = tree.root()
             }
             return this.store.put(doc)
         }
