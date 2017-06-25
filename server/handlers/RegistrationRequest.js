@@ -2,6 +2,7 @@
  * Dependencies
  */
 const debug = require('debug')('trust:http:register')
+const crypto = require('crypto')
 const { JWT } = require('@trust/jose')
 const { BaseRequest } = require('@trust/http-service')
 
@@ -112,23 +113,32 @@ class RegistrationRequest extends BaseRequest {
    */
   certifyPublicKey () {
     let { req, service } = this
-    let { body: { jwk } } = req
+    let { body: { jwk, email } } = req
     let { keys: { certs } } = service
     let cryptoKey = certs.privateKey
+    let kid = certs.publicJwk.kid // "CA"'s pub key id
     let issuer = `http://${ process.env.HOST }:${ process.env.PORT || 5150 }`
     debug('certificating public key')
 
     return JWT.sign({
       header: {
-        alg: 'KS256',
-        jku: `${issuer}/jwks`
+        alg: 'KS256',             // Signing algorithm
+        kid: kid,                 // CU's public key identifier
+        jku: `${issuer}/jwks`     // location of CU's published public keys
       },
       payload: {
-        iss: issuer,
-        sub: 'hashofemail?',
-        jwk: this.req.body.jwk,
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365)
+        jti: jwk.jti || crypto.randomBytes(10).toString('hex'),   // Certicate identifier
+        kid: jwk.kid || crypto.randomBytes(10).toString('hex'),   // Subject's public key identifier
+        iss: issuer,                                              // URI of CU
+        sub: email, // hash this                                  // Owner of certificated public key
+        kty: jwk.kty,                                             // Algorithm family of key (i.e., RSA, EC, oct)
+        crv: jwk.crv,                                             // Curve identifier
+        x: jwk.x,                                                 // Key material
+        y: jwk.y,                                                 // Key material
+        key_ops: jwk.key_ops,                                     // Operations permitted with this key
+        ext: jwk.ext,
+        iat: Math.floor(Date.now() / 1000),                       // Time of certification
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365) // Time of certificate expiration
       },
       serialization: 'compact',
       cryptoKey
