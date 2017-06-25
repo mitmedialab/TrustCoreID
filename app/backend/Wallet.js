@@ -5,7 +5,7 @@ const fs = require('fs')
 const fetch = require('node-fetch')
 const keyto = require('@trust/keyto')
 const crypto = require('@trust/webcrypto')
-const { JWD } = require('@trust/jose')
+const { JWT, JWD, JWKSet } = require('@trust/jose')
 
 /**
  * Constants
@@ -28,6 +28,7 @@ class UnsafeWallet {
 
   constructor (data = {}) {
     Object.assign(this, data)
+    this.jwkSets = {}
   }
 
   /**
@@ -221,14 +222,34 @@ class UnsafeWallet {
    * verify certificates, and resolve a promise with
    * keys for signature verification.
    */
-  resolveKeys () {
-    // uhm... yeah
+  resolveKeys (jku) {
+    let jwks = this.jwkSets[jku]
+
+    if (jwks) {
+      return Promise.resolve(jwks)
+    } else {
+      return fetch(jku)
+        .then(res => res.json())
+        .then(data => JWKSet.importKeys(data))
+        //.then(jwks => this.jwkSets[jku] = jwks)
+        .catch(console.log)
+    }
   }
 
   /**
    * verifyCertificate
    */
-  verifyCertificate () {}
+  verifyCertificate (jwc) {
+    let {payload, signatures} = JWT.decode(jwc)
+    let { 'protected': header, signature } = signatures[0]
+    let { alg, kid, jku } = header
+
+    return this.resolveKeys(jku).then(jwks => {
+
+      // WIP
+
+    })
+  }
 
   /**
    * verifyDocument
@@ -264,7 +285,7 @@ class UnsafeWallet {
   protectedHeader () {
     return {
       alg: 'KS256',
-      jwk: this.publicJwk   // TODO replace this with key certificated by a provider
+      jwc: this.cert
     }
   }
 
@@ -284,14 +305,16 @@ module.exports = UnsafeWallet
 
 //Promise.resolve()
 //  .then(() => UnsafeWallet.open())
-//  .then(wallet => wallet.registerPublicKey({
-//    provider: 'http://localhost:5150',
-//    registration: {
-//      name: '1337 H4x0r',
-//      email: 'p0wn3d@yomama.io'
-//    }
-//  }))
-//  //.then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
+//  //.then(wallet => wallet.registerPublicKey({
+//  //  provider: 'http://localhost:5150',
+//  //  registration: {
+//  //    name: 'Christian Smith',
+//  //    email: 'smith@anvil.io'
+//  //  }
+//  //}))
+//  .then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
 //  //.then(wallet => console.log(wallet.privateJwk))
+//  //.then(wallet => wallet.verifyCertificate(wallet.cert))
+//  //.then(wallet => wallet.resolveKeys('http://localhost:5150/jwks'))
 //  .then(console.log)
 //  .catch(console.error)
