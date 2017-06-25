@@ -47,15 +47,13 @@ export default class NewDocument extends Component {
                     }
 
                     magic.detectFile(fileNames[0], (err, result) => {
-                        let fileName = fileNames[0].substr(fileNames[0].lastIndexOf('/') + 1);
-
+                        let fileName = fileNames[0]; //.substr(fileNames[0].lastIndexOf('/') + 1);
 
                         this.state.attachments.push({
                             fileName,
                             "content_type": result,
                             data: data
                         });
-
 
                         this.forceUpdate();
                     });

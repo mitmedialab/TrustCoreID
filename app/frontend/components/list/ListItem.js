@@ -69,23 +69,19 @@ class ListItem extends React.Component {
                             return (
                                 <div key={index}>
                                     <div className="listItem">
-                                        <span className="listItemLabel">ISS:</span>
-                                        {signature.protected.iss}</div>
-                                    <div className="listItem">
                                         <span className="listItemLabel">ALG:</span>
                                         {signature.protected.alg}</div>
                                     <div className="listItem">
-                                        <span className="listItemLabel">TYP:</span>
-                                        {signature.protected.typ}</div>
-                                    <div className="listItem">
-                                        <span className="listItemLabel">KID:</span>
-                                        {signature.protected.kid}</div>
+                                        <span className="listItemLabel">Public Key:</span>
+                                        <ReactJson src={signature.protected.jwk}/>
+                                    </div>
                                     <div className="listItem">
                                         <span className="listItemLabel">Signature:</span>
                                         <div className="signature">{signature.signature}</div>
                                     </div>
 
-                                </div>)
+                                </div>
+                            )
                         }
                     }) : undefined}
 

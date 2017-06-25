@@ -92,10 +92,10 @@ class Storage {
                 doc._attachments = {};
                 attachments.forEach(attachment => {
 
-                    let filename = attachement.fileName
+                    let filename = attachment.fileName.substr(attachment.fileName.lastIndexOf('/') + 1)
                     files.push(attachment.fileName)
 
-                    doc._attachments[attachment.fileName] = {
+                    doc._attachments[filename] = {
                         content_type: attachment.content_type,
                         data: attachment.data
                     }
