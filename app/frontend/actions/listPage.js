@@ -22,7 +22,8 @@ export function sign(item) {
             .then(wallet => wallet.signDocument(item))
             .then(updated => {
                 let up = JSON.parse(updated);
-                item.signatures = [].concat(item.signatures).concat(up.signatures);
+                let signaturesList = item.signatures ? item.signatures : [];
+                item.signatures = signaturesList.concat(up.signatures);
                 Storage.open().then(store => {
                     store.put(JSON.parse(JSON.stringify(item)), true).then(doc => {
                             refreshDocumentList(dispatch);

@@ -9,7 +9,6 @@ const couch = {
     }
 }
 
-console.log(couch);
 let cache;
 
 class Storage {
@@ -31,45 +30,43 @@ class Storage {
         this.localFeed = new PouchDB(`users-${id}`);
 
         this.remoteFeed = new PouchDB(`http://138.197.8.148:5984/users-${id}`, couch);
-
-        this.localFeed.sync(this.remoteFeed, {
-            live: true
-        });
-
-        this.remoteFeed.changes({
+        this.localFeed.changes({
                 live: true,
+                since: 'now',
                 include_docs: true
             })
             .on('change', (update) => {
                 let {doc}= update.doc;
-
                 if (doc) {
-
-                    delete doc['_rev'];
                     this.store.get(doc._id).then(data => {
-                        console.log('found', data);
                         let updated = Object.assign(data, doc);
+                        console.log('\nUpdating ', doc._id);
+                        console.log(JSON.stringify(updated))
                         this.store.put(updated).then(data => {
                             if (this.callback) {
                                 this.callback();
                             }
                         }).catch(err=> {
-                            console.log('err', err)
+                            console.log('Err [update]', err)
                         })
                     }).catch(err => {
-                        console.log('err', err);
-                        delete doc['_rev'];
+                        console.log('Creating ', doc._id);
                         this.store.put(doc).then(data => {
                             console.log(this.callback)
                             if (this.callback) {
                                 this.callback();
                             }
                         }).catch(err=> {
-                            console.log('err', err)
+                            console.log('Err [create]', err)
                         })
                     });
                 }
             });
+
+        this.localFeed.sync(this.remoteFeed, {
+            live: true
+        });
+
 
     }
 
