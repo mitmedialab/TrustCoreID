@@ -69,7 +69,7 @@ class ListItem extends React.Component {
                                         {signature.protected.alg}</div>
                                     <div className="listItem">
                                         <span className="listItemLabel">Public Key:</span>
-                                        <ReactJson src={signature.protected.jwk}/>
+                                        <div className="signature">{signature.protected.jwc}</div>
                                     </div>
                                     <div className="listItem">
                                         <span className="listItemLabel">Signature:</span>
