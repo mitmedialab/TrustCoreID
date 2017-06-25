@@ -13,8 +13,8 @@ export function select(item) {
     };
 }
 
-export function save(name, payload, receip) {
-    
+export function save(name, payload, receip, attachments) {
+
     let to = receip.trim().split(',').reduce((memo, item) => {
         memo.push(item.trim());
         return memo;
@@ -30,7 +30,7 @@ export function save(name, payload, receip) {
 
     return (dispatch) => {
         Storage.open().then(storage => {
-            storage.put(document).then(() => {
+            storage.put(document, false, attachments).then(() => {
                 refreshDocumentList(dispatch, 1);
             })
         });

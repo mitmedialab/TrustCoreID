@@ -19,6 +19,7 @@
     "@trust/keyto": "^0.3.0",
     "@trust/webcrypto": "^0.2.1",
     "leveldown": "^1.7.2",
+    "mmmagic": "^0.4.5",
     "pouchdb": "^6.2.0",
     "react-json-view": "^1.9.5",
     "uuid4": "^1.0.0"

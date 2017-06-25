@@ -41,7 +41,6 @@ class Storage {
                     this.store.get(doc._id).then(data => {
                         let updated = Object.assign(data, doc);
                         console.log('\nUpdating ', doc._id);
-                        console.log(JSON.stringify(updated))
                         this.store.put(updated).then(data => {
                             if (this.callback) {
                                 this.callback();
@@ -74,12 +73,25 @@ class Storage {
         return this.store;
     }
 
-    put(doc, storeToFeed) {
+    put(doc, storeToFeed, attachments) {
         if (storeToFeed) {
             return this.putToFeed(doc);
         } else {
+            if (attachments) {
+                doc._attachments = {};
+                attachments.forEach(attachment => {
+                    doc._attachments[attachment.fileName] = {
+                        content_type: attachment.content_type,
+                        data: Buffer.from(attachment.data)
+                    }
+                })
+            }
             return this.store.put(doc)
         }
+    }
+
+    getAttachment(document, attachment) {
+        return this.store.getAttachment(document, attachment)
     }
 
     putToFeed(doc) {

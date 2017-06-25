@@ -54,9 +54,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('execute', (payload) => {
-  console.log(payload);
-});
 
 
 app.on('ready', async () => {

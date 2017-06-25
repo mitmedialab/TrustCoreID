@@ -11,7 +11,8 @@ class ListItem extends React.Component {
 
         this.state = {
             expanded: false
-        }
+        };
+
     }
 
 
@@ -24,7 +25,7 @@ class ListItem extends React.Component {
                     <i className="fa fa-key"></i>
                         {this.props.item.signatures.length}
 
-                        {this.props.item.signatures.length < this.props.item.to.length+1 ?
+                        {this.props.item.signatures.length < this.props.item.to.length + 1 ?
                             (<span className="link" onClick={this.props.sign}>
                         <i className="fa fa-check"></i>
                         Sign
@@ -88,6 +89,19 @@ class ListItem extends React.Component {
                         }
                     }) : undefined}
 
+                    { this.props.item._attachments ?
+                        <span>
+                            <label>Attachments</label>
+                            {Object.keys(this.props.item._attachments).map((key)=> {
+                                let att = this.props.item._attachments[key];
+                                return (<PayloadItem
+                                    key={key}
+                                    name={key}
+                                    document={this.props.item._id}
+                                    download={true}
+                                    item={att}/>)
+                            })}
+                        </span> : undefined}
                     <label>Payload</label>
                     <ReactJson src={this.props.item.payload}/>
                 </div>

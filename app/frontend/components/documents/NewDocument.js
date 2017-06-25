@@ -7,7 +7,11 @@ import {remote} from 'electron'
 import { JSONSchema } from '@trust/json-document'
 import ComponentFactory from '../common/ComponentFactory';
 import Input from '../common/Input';
+import mmm from 'mmmagic';
 
+const Magic = mmm.Magic;
+const magic = new Magic(mmm.MAGIC_MIME_TYPE);
+const fs = require('fs');
 
 export default class NewDocument extends Component {
 
@@ -15,15 +19,16 @@ export default class NewDocument extends Component {
         super(props);
         this.state = {
             search: '',
-            name: 'Untitled-'+Math.round(Math.random()*1e4),
+            name: 'Untitled-' + Math.round(Math.random() * 1e4),
             recipients: '',
-            data: {}
+            data: {},
+            attachments: []
         };
 
-        console.log(props)
 
         this.selectSchema = this.selectSchema.bind(this);
         this.getComponent = ComponentFactory.getComponent.bind(this);
+        this.upload = this.upload.bind(this);
     }
 
     selectSchema(schema) {
@@ -31,9 +36,61 @@ export default class NewDocument extends Component {
         this.setState({schema: clone})
     }
 
+    upload() {
+        var dialog = remote.dialog;
+        dialog.showOpenDialog((fileNames) => {
+            if (fileNames) {
+                fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+                    if (err) {
+                        alert("An error ocurred reading the file :" + err.message);
+                        return;
+                    }
+
+                    magic.detectFile(fileNames[0], (err, result) => {
+                        let fileName = fileNames[0].substr(fileNames[0].lastIndexOf('/') + 1);
+
+
+                        this.state.attachments.push({
+                            fileName,
+                            "content_type": result,
+                            data: data
+                        });
+
+
+                        this.forceUpdate();
+                    });
+                });
+            }
+        });
+    }
+
 
     render() {
 
+        const getContentItem = (item, index) => {
+
+            let icon = '';
+            switch (item.meta.type) {
+                case 'file':
+                    mappings.forEach(mapping => {
+                        console.log(mapping.search, item.meta.name);
+                        if (mapping.search.test(item.meta.name)) {
+                            icon = mapping.icon;
+                        }
+                    })
+            }
+
+            if (!icon) {
+                icon = 'fa-file-o';
+            }
+
+            icon = 'fa ' + icon;
+
+            return (<div key={index} className="item">
+                <i className={icon}/>
+                <span className="ml-2">{item.meta.name}</span>
+            </div>)
+        }
 
         if (this.state.schema && !this.schemaComponents) {
             const getSchemaComponents = (schema, path = 'schema', index = 0) => {
@@ -73,12 +130,32 @@ export default class NewDocument extends Component {
                            onChange={ (e) => {
                             this.setState({recipients: e.target.value})
                            }}/>
+
+
+                    <h4>File Attachments</h4>
+
+                    {this.state.attachments.map((item, index)=> {
+                        return (<PayloadItem
+                            key={index}
+                            name={item.fileName}
+                            remove={() => {
+                                    delete this.state.splice(index, 1);
+                                    this.forceUpdate()
+                                }}
+                            item={item}/>)
+                    })}
+
+                    <div className="mt-2">
+                        <span className="btn btn-primary-outline "
+                              onClick={ () => {this.upload()}}>Add File</span>
+                    </div>
                     <h4>{this.state.schema.title}</h4>
                     {this.schemaComponents}
 
                     <div className="text-right">
-                        <span className="btn btn-primary-outline" onClick={()=>{this.props.save(this.state.name, this.state.data, this.state.recipients)}}>
-                            <i className="fa fa-save"  /> Save
+                        <span className="btn btn-primary-outline"
+                              onClick={()=>{this.props.save(this.state.name, this.state.data, this.state.recipients, this.state.attachments)}}>
+                            <i className="fa fa-save"/> Save
                         </span>
                     </div>
                 </div>
