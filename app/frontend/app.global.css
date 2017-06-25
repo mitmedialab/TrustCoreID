@@ -431,6 +431,12 @@ div#wrapper, .smiley div {
   margin-top: 0;
 }
 
+.bordered {
+  border: 1px solid #eceeef;
+  border-radius: 2px;
+  padding: 5px;
+}
+
 .item {
   display: block;
   margin: 5px 0;

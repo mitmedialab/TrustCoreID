@@ -63,7 +63,7 @@ class ListItem extends React.Component {
                     {this.props.item.signatures ? this.props.item.signatures.map((signature, index) => {
                         if (signature && signature.protected) {
                             return (
-                                <div key={index}>
+                                <div key={index} className="mt-4 bordered">
                                     <div className="listItem">
                                         <span className="listItemLabel">ALG:</span>
                                         {signature.protected.alg}</div>

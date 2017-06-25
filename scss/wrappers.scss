@@ -14,6 +14,12 @@
   }
 }
 
+.bordered {
+  border: 1px solid $gray-lighter;
+  border-radius: 2px;
+  padding: 5px;
+}
+
 .item {
   display: block;
   margin: $base-spacer 0;

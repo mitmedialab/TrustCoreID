@@ -14,12 +14,12 @@ export default function items(state = {
                 let document = item.doc;
                 if (!document.from) {
                     memo[1].push(document);
+                } else if (document.signatures && document.signatures.length === document.to.length + 1) {
+                    memo[3].push(document);
                 } else if (document.from !== state.userData.email) {
                     memo[0].push(document);
                 } else if (!document.signatures || document.signatures.length < document.to.length + 1) {
                     memo[2].push(document);
-                } else if (document.signatures && document.signatures.length === document.to.length + 1) {
-                    memo[3].push(document);
                 }
                 return memo;
             }, {0: [], 1: [], 2: [], 3: [], 4: []});
