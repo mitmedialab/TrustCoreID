@@ -55,10 +55,6 @@ class ListItem extends React.Component {
             if (!this.state.expanded)
                 return;
 
-            //let payload = this.props.item.payload.constructor === Array ?
-            //    this.props.item.payload : [this.props.item.payload];
-            console.log(this.props.item);
-
             return (
                 <div>
                     <label>To</label>
@@ -114,7 +110,7 @@ class ListItem extends React.Component {
             }
         };
 
-        return (<div className={styles.item}>
+        return (<div className={this.state.expanded ? styles.expanded : styles.item}>
             <div className={styles.summary}>
                 <span onClick={() => {
                         this.setState({expanded: !this.state.expanded});

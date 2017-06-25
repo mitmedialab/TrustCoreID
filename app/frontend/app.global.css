@@ -4,8 +4,8 @@ label {
   margin-bottom: 10px;
   display: block;
   font-size: 14px;
-  color: #636c72;
-  font-weight: 900;
+  color: #0277BD;
+  font-weight: 100;
 }
 
 select {
@@ -446,9 +446,8 @@ div#wrapper, .smiley div {
 .listItem .listItemLabel {
   display: inline-block;
   color: #636c72;
-  font-weight: 900;
+  font-weight: 400;
   font-size: 14px;
-  font-variant: small-caps;
   width: 100px;
   white-space: nowrap;
   overflow: hidden;
@@ -478,6 +477,11 @@ div#wrapper, .smiley div {
 .selection li:hover {
   background-color: #f7f7f9;
   border-left-color: #0277BD;
+}
+
+.pretty-json-container {
+  overflow: auto;
+  display: block;
 }
 
 .btn {

@@ -6,15 +6,21 @@ const fs = require('fs');
 
 const mappings = [
     {search: /\.(pdf)$/i, icon: 'fa-file-pdf-o'},
-    {search: /\.(gif|jpg|jpeg|tiff|png)$/i, icon: 'fa-file-image-o'}
+    {
+        search: /\.(gif|jpg|jpeg|tiff|png)$/i,
+        icon: 'fa-file-image-o'
+    }
 ];
 
 class PayloadItem extends React.Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            preview: undefined
+        };
         this.download = this.download.bind(this);
+        this.showPreview = this.showPreview.bind(this);
     }
 
     download() {
@@ -31,14 +37,25 @@ class PayloadItem extends React.Component {
 
     }
 
+    showPreview(previewFunction) {
+        console.log('showCalled')
+        Storage.open().then(store => {
+            store.getAttachment(this.props.document, this.props.name).then(buf => {
+                this.setState({preview: previewFunction(buf)});
+            })
+        });
+    }
+
     render() {
         let icon = '',
+            previewFunction = false,
             {item} = this.props,
             name = this.props.name;
 
         mappings.forEach(mapping => {
             if (mapping.search.test(name)) {
                 icon = mapping.icon;
+                previewFunction = mapping.preview
             }
         });
 
@@ -49,14 +66,20 @@ class PayloadItem extends React.Component {
 
         icon = 'fa ' + icon;
 
+
         return (
             <span className="item">
                 <i className={icon}/>
                 <span className="ml-2">{name}</span>
                 {this.props.remove ? (
                     <i className="float-right fa fa-remove" onClick={this.props.remove}></i>) : undefined}
+
                 {this.props.download ? (
                     <i className="float-right fa fa-download" onClick={()=>{this.download()}}></i>) : undefined}
+
+                {previewFunction ? (<i className="float-right fa fa-eye mr-2"
+                                       onClick={()=>{this.showPreview(previewFunction)}}></i>) : undefined}
+                {this.state.preview}
             </span>)
     }
 

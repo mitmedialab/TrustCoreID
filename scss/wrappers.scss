@@ -28,9 +28,8 @@
   .listItemLabel {
     display: inline-block;
     color: $gray-light;
-    font-weight: 900;
+    font-weight: 400;
     font-size: 14px;
-    font-variant: small-caps;
     width: 100px;
     white-space: nowrap;
     overflow: hidden;
@@ -64,4 +63,9 @@
 
   }
 
+}
+
+.pretty-json-container {
+  overflow: auto;
+  display: block;
 }
