@@ -9,7 +9,6 @@ const couch = {
     }
 }
 
-console.log(couch);
 let cache;
 
 class Storage {
@@ -34,42 +33,47 @@ class Storage {
 
         this.localFeed.sync(this.remoteFeed, {
             live: true
+        }).on('error', function (err) {
+            console.log('Error on sync', err)
         });
 
-        this.remoteFeed.changes({
+        this.localFeed.changes({
                 live: true,
+                since: 'now',
                 include_docs: true
             })
             .on('change', (update) => {
                 let {doc}= update.doc;
-
                 if (doc) {
-
-                    delete doc['_rev'];
                     this.store.get(doc._id).then(data => {
-                        console.log('found', data);
                         let updated = Object.assign(data, doc);
+                        console.log('\nUpdating ', doc._id);
                         this.store.put(updated).then(data => {
                             if (this.callback) {
                                 this.callback();
                             }
                         }).catch(err=> {
-                            console.log('err', err)
+                            console.log('Err [update]', err)
                         })
                     }).catch(err => {
-                        console.log('err', err);
-                        delete doc['_rev'];
+                        console.log('Creating ', doc._id);
                         this.store.put(doc).then(data => {
                             console.log(this.callback)
                             if (this.callback) {
                                 this.callback();
                             }
                         }).catch(err=> {
-                            console.log('err', err)
+                            console.log('Err [create]', err)
                         })
                     });
                 }
-            });
+            }).on('error', function (err) {
+            console.log('Local Feed changes err:', err)
+        });
+
+
+
+
 
     }
 
@@ -77,12 +81,25 @@ class Storage {
         return this.store;
     }
 
-    put(doc, storeToFeed) {
+    put(doc, storeToFeed, attachments) {
         if (storeToFeed) {
             return this.putToFeed(doc);
         } else {
+            if (attachments) {
+                doc._attachments = {};
+                attachments.forEach(attachment => {
+                    doc._attachments[attachment.fileName] = {
+                        content_type: attachment.content_type,
+                        data: attachment.data
+                    }
+                })
+            }
             return this.store.put(doc)
         }
+    }
+
+    getAttachment(document, attachment) {
+        return this.store.getAttachment(document, attachment)
     }
 
     putToFeed(doc) {
@@ -90,9 +107,19 @@ class Storage {
         let updateList = doc.to.concat([doc.from]);
         let promiseArray = [];
         updateList.forEach(to=> {
-            promiseArray.push(this.localFeed.post({to, from: doc.from, doc}));
+            let promise = this.localFeed.post({to, from: doc.from, doc});
+            promise.catch(err => {
+                console.log("Error while posting to feed. ", err)
+            });
+            promiseArray.push(promise);
         });
-        return Promise.all(promiseArray);
+        let collection = Promise.all(promiseArray);
+
+        collection.catch(err=> {
+            console.log('###', err);
+        });
+
+        return collection;
     }
 
     get(id) {

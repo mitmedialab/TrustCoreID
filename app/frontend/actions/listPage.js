@@ -9,6 +9,8 @@ export function send(item, email) {
             let update = Object.assign({}, item, {from: email});
             store.put(update, true).then(data => {
                 refreshDocumentList(dispatch, 2);
+            }).catch(err=> {
+                console.log('error while storing', err);
             })
         });
     }
@@ -22,7 +24,8 @@ export function sign(item) {
             .then(wallet => wallet.signDocument(item))
             .then(updated => {
                 let up = JSON.parse(updated);
-                item.signatures = [].concat(item.signatures).concat(up.signatures);
+                let signaturesList = item.signatures ? item.signatures : [];
+                item.signatures = signaturesList.concat(up.signatures);
                 Storage.open().then(store => {
                     store.put(JSON.parse(JSON.stringify(item)), true).then(doc => {
                             refreshDocumentList(dispatch);

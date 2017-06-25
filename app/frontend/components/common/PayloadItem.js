@@ -1,4 +1,8 @@
 import React from 'react';
+import {remote} from 'electron'
+
+const {Storage, Wallet} = require('electron').remote.require('./backend');
+const fs = require('fs');
 
 const mappings = [
     {search: /\.(pdf)$/i, icon: 'fa-file-pdf-o'},
@@ -7,24 +11,37 @@ const mappings = [
 
 class PayloadItem extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.download = this.download.bind(this);
+    }
+
+    download() {
+        Storage.open().then(store => {
+            store.getAttachment(this.props.document, this.props.name).then(buf => {
+                remote.dialog.showSaveDialog({defaultPath: this.props.name}, (fileName) => {
+                    if (fileName === undefined) return;
+                    fs.writeFile(fileName, buf, (err) => {
+                        console.log(err);
+                    });
+                });
+            })
+        });
+
+    }
+
     render() {
         let icon = '',
             {item} = this.props,
-            name = item.meta.name;
-        switch (item.meta.type) {
-            case 'file':
-                mappings.forEach(mapping => {
-                    if (mapping.search.test(item.meta.name)) {
-                        icon = mapping.icon;
-                    }
-                });
-                break;
-            case 'text':
-                name = 'text';
-                icon = 'fa-file-text-o';
-                break;
+            name = this.props.name;
 
-        }
+        mappings.forEach(mapping => {
+            if (mapping.search.test(name)) {
+                icon = mapping.icon;
+            }
+        });
+
 
         if (!icon) {
             icon = 'fa-file-o';
@@ -33,10 +50,14 @@ class PayloadItem extends React.Component {
         icon = 'fa ' + icon;
 
         return (
-            <div className="item">
+            <span className="item">
                 <i className={icon}/>
                 <span className="ml-2">{name}</span>
-            </div>)
+                {this.props.remove ? (
+                    <i className="float-right fa fa-remove" onClick={this.props.remove}></i>) : undefined}
+                {this.props.download ? (
+                    <i className="float-right fa fa-download" onClick={()=>{this.download()}}></i>) : undefined}
+            </span>)
     }
 
 }
