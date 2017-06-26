@@ -4,7 +4,7 @@ label {
   margin-bottom: 10px;
   display: block;
   font-size: 14px;
-  color: #0277BD;
+  color: #292b2c;
   font-weight: 100;
 }
 
@@ -476,6 +476,7 @@ div#wrapper, .smiley div {
 .selection li {
   list-style: none;
   padding: 5px;
+  margin-top: 5px;
   border-left: 2px solid #f7f7f9;
   cursor: pointer;
 }

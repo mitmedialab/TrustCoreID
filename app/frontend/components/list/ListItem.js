@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './List.css';
 import PayloadItem from '../common/PayloadItem';
 import ReactJson from 'react-json-view'
+import Identifier from '../common/Identifier';
 
 class ListItem extends React.Component {
 
@@ -38,13 +39,13 @@ class ListItem extends React.Component {
                         <i className="fa fa-arrow-right"></i>
                         Send
                     </span>
-                    <span className="link danger" onClick={this.props.remove}>
-                        <i className="fa fa-remove"></i>
-                        Delete
-                    </span>
                     <span className="link" onClick={this.props.sign}>
                         <i className="fa fa-check"></i>
                         Sign
+                    </span>
+                     <span className="link danger ml-2" onClick={this.props.remove}>
+                        <i className="fa fa-remove"></i>
+                        Delete
                     </span>
 
                 </span>)
@@ -58,7 +59,10 @@ class ListItem extends React.Component {
             return (
                 <div>
                     <label>To</label>
-                    {this.props.item.to.join(',')}
+
+                    {this.props.item.to.map((to, index)=> {
+                        return (<div key={index}><Identifier initials={to} size={24} />{to}</div>)
+                    })}
                     <label>Signatures</label>
                     {this.props.item.signatures ? this.props.item.signatures.map((signature, index) => {
                         if (signature && signature.protected) {

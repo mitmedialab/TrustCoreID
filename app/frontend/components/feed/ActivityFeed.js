@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Identifier from '../common/Identifier';
 
 export default class ActivityFeed extends Component {
 
@@ -39,10 +40,10 @@ export default class ActivityFeed extends Component {
                         </div>
                         <div>
                             <span className="label">from:</span>
-                            {item.doc.from}</div>
+                            <Identifier size={18} initials={item.doc.from} />{item.doc.from}</div>
                         <div>
                             <span className="label">to:</span>
-                            {item.doc.to}</div>
+                            <Identifier size={18} initials={item.doc.to} />{item.doc.to}</div>
                     </span>
                 </div>)
             })}
