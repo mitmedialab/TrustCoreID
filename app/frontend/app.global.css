@@ -4,8 +4,8 @@ label {
   margin-bottom: 10px;
   display: block;
   font-size: 14px;
-  color: #636c72;
-  font-weight: 900;
+  color: #292b2c;
+  font-weight: 100;
 }
 
 select {
@@ -19,6 +19,7 @@ select {
   font-weight: 100;
   outline: none;
   transition: all 400ms;
+  -webkit-appearance: none;
   background-color: #fff;
 }
 
@@ -67,6 +68,20 @@ a {
 .button:hover {
   background-color: #0287d6;
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.4);
+}
+
+.link {
+  margin-right: 5px;
+  color: #0277BD;
+  cursor: pointer;
+}
+
+.link .fa {
+  margin-right: 5px;
+}
+
+.link.danger {
+  color: #d9403d;
 }
 
 .m-1 {
@@ -416,6 +431,12 @@ div#wrapper, .smiley div {
   margin-top: 0;
 }
 
+.bordered {
+  border: 1px solid #eceeef;
+  border-radius: 2px;
+  padding: 5px;
+}
+
 .item {
   display: block;
   margin: 5px 0;
@@ -431,9 +452,8 @@ div#wrapper, .smiley div {
 .listItem .listItemLabel {
   display: inline-block;
   color: #636c72;
-  font-weight: 900;
+  font-weight: 400;
   font-size: 14px;
-  font-variant: small-caps;
   width: 100px;
   white-space: nowrap;
   overflow: hidden;
@@ -456,6 +476,7 @@ div#wrapper, .smiley div {
 .selection li {
   list-style: none;
   padding: 5px;
+  margin-top: 5px;
   border-left: 2px solid #f7f7f9;
   cursor: pointer;
 }
@@ -463,6 +484,37 @@ div#wrapper, .smiley div {
 .selection li:hover {
   background-color: #f7f7f9;
   border-left-color: #0277BD;
+}
+
+.pretty-json-container {
+  overflow: auto;
+  display: block;
+}
+
+.preview {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  z-index: 9999;
+}
+
+.preview .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.preview .fa-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #fff;
+  font-size: 30px;
 }
 
 .btn {
@@ -489,6 +541,50 @@ div#wrapper, .smiley div {
   border: 1px solid #0277BD;
   color: #0277BD;
   background-color: #fff;
+}
+
+.activityItem {
+  display: block;
+  border-left: 1px solid #eceeef;
+  margin-left: 10px;
+}
+
+.activityItem .activityDate {
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 12px;
+  color: #000;
+  margin: 10px 0 2px -10px;
+  padding: 4px;
+}
+
+.activityItem .activityDate:before {
+  content: ' ';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #c6c6c6;
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.activityItem .activityContent {
+  background-color: #fff;
+  display: block;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 3px 14px 1px rgba(0, 0, 0, 0.1);
+  margin: 0 5px 0 10px;
+  border-radius: 2px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.activityItem .activityContent .label {
+  color: #636c72;
+  display: inline-block;
+  min-width: 50px;
+  font-weight: 100;
 }
 
 @font-face {

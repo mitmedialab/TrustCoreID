@@ -4,7 +4,7 @@ import NewDocumentComponent from '../components/documents/NewDocument';
 import * as NewDocumentActions from '../actions/newDocument';
 
 function mapStateToProps(state) {
-    return state.newdoc
+    return state
 }
 
 function mapDispatchToProps(dispatch) {

@@ -2,9 +2,10 @@
  * Dependencies
  */
 const fs = require('fs')
+const fetch = require('node-fetch')
 const keyto = require('@trust/keyto')
 const crypto = require('@trust/webcrypto')
-const { JWD } = require('@trust/jose')
+const { JWT, JWD, JWKSet } = require('@trust/jose')
 
 /**
  * Constants
@@ -24,6 +25,11 @@ const WALLET_FILE = 'unsafe-wallet.json'
  * used in production.
  */
 class UnsafeWallet {
+
+  constructor (data = {}) {
+    Object.assign(this, data)
+    this.jwkSets = {}
+  }
 
   /**
    * open
@@ -47,7 +53,7 @@ class UnsafeWallet {
       if (!err.code === 'ENOENT') { throw err }
     }
 
-    let wallet = new UnsafeWallet()
+    let wallet = new UnsafeWallet(data)
 
     if (data) {
       return wallet.importKeypair(data)
@@ -70,7 +76,8 @@ class UnsafeWallet {
    */
   save () {
     return this.exportKeypair().then(data => {
-      fs.writeFileSync(WALLET_FILE, JSON.stringify(data, null, 2))
+      let serialized = JSON.stringify(Object.assign({}, this, data), null, 2)
+      fs.writeFileSync(WALLET_FILE, serialized)
       return this
     })
   }
@@ -184,7 +191,23 @@ class UnsafeWallet {
    * @description
    * Register a public key with a provider to object a certificated key.
    */
-  registerPublicKey (provider) {}
+  registerPublicKey (options) {
+    let { provider, registration } = options
+
+    return fetch(`${provider}/account/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(Object.assign({}, registration, { jwk: this.publicJwk }))
+    })
+    .then(res => res.json())
+    .then(user => {
+      Object.assign(this, user)
+    })
+    .then(() => this.save())
+
+  }
 
   /**
    * registerProvider
@@ -199,14 +222,34 @@ class UnsafeWallet {
    * verify certificates, and resolve a promise with
    * keys for signature verification.
    */
-  resolveKeys () {
-    // uhm... yeah
+  resolveKeys (jku) {
+    let jwks = this.jwkSets[jku]
+
+    if (jwks) {
+      return Promise.resolve(jwks)
+    } else {
+      return fetch(jku)
+        .then(res => res.json())
+        .then(data => JWKSet.importKeys(data))
+        //.then(jwks => this.jwkSets[jku] = jwks)
+        .catch(console.log)
+    }
   }
 
   /**
    * verifyCertificate
    */
-  verifyCertificate () {}
+  verifyCertificate (jwc) {
+    let {payload, signatures} = JWT.decode(jwc)
+    let { 'protected': header, signature } = signatures[0]
+    let { alg, kid, jku } = header
+
+    return this.resolveKeys(jku).then(jwks => {
+
+      // WIP
+
+    })
+  }
 
   /**
    * verifyDocument
@@ -242,7 +285,7 @@ class UnsafeWallet {
   protectedHeader () {
     return {
       alg: 'KS256',
-      jwk: this.publicJwk   // TODO replace this with key certificated by a provider
+      jwc: this.cert
     }
   }
 
@@ -262,6 +305,16 @@ module.exports = UnsafeWallet
 
 //Promise.resolve()
 //  .then(() => UnsafeWallet.open())
+//  //.then(wallet => wallet.registerPublicKey({
+//  //  provider: 'http://localhost:5150',
+//  //  registration: {
+//  //    name: 'Christian Smith',
+//  //    email: 'smith@anvil.io'
+//  //  }
+//  //}))
 //  .then(wallet => wallet.signDocument({ payload: { hello: 'world' } }))
+//  //.then(wallet => console.log(wallet.privateJwk))
+//  //.then(wallet => wallet.verifyCertificate(wallet.cert))
+//  //.then(wallet => wallet.resolveKeys('http://localhost:5150/jwks'))
 //  .then(console.log)
 //  .catch(console.error)

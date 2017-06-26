@@ -1,0 +1,46 @@
+@import 'variables';
+
+.activityItem {
+  display: block;
+  border-left: 1px solid $gray-lighter;
+  margin-left: 10px;
+
+  .activityDate {
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 12px;
+    color: $black;
+    margin: $base-spacer*2 0 2px -10px;
+    padding: 4px;
+
+    &:before {
+      content: ' ';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: $gray-light1;
+      margin-left: 2px;
+      margin-right: $base-spacer * 2;
+    }
+  }
+
+  .activityContent {
+    background-color: $white;
+    display: block;
+    border: 1px solid $gray-light2;
+    box-shadow: 0 3px 14px 1px rgba(0,0,0,.1);
+    margin: 0 $base-spacer 0 10px;
+    border-radius: 2px;
+    padding: $base-spacer;
+    font-size: 14px;
+
+    .label {
+      color: $gray-light;
+      display: inline-block;
+      min-width: 50px;
+      font-weight: 100;
+    }
+  }
+
+}
