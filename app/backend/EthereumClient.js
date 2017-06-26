@@ -70,9 +70,12 @@ class EthereumClient {
           if (err) {
             reject(err)
           } else {
-            blockFilter.stopWatching(() => {
-              resolve(receipt)
+            blockFilter.stopWatching((err) => {
+              if (err) {
+                console.log(err)
+              }
             })
+            resolve(receipt)
           }
         })
       })

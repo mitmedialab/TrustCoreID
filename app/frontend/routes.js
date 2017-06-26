@@ -6,6 +6,7 @@ import App from './containers/App';
 import ListPage from './containers/ListPage';
 import AnonPage from './containers/AnonPage';
 import NewDocumentPage from './containers/NewDocumentPage';
+import ActivityFeedPage from './containers/ActivityFeedPage';
 
 import LeftNav from './containers/LeftNav'
 import TopBar from './containers/TopBar'
@@ -21,6 +22,7 @@ class Wrapper extends React.Component {
                 <LeftNav />
                 <Route path="/runtime/documents/:id" component={ListPage} />
                 <Route path="/runtime/newdoc" exact={true} component={NewDocumentPage}/>
+                <Route path="/runtime/activity" component={ActivityFeedPage}/>
             </span>)
     }
 

@@ -18,6 +18,11 @@ export default class TopBar extends Component {
                     Attestations
                 </Link>
 
+                <Link to="/runtime/activity">
+                    <i className="fa fa-list"></i>
+                    Activity Feed
+                </Link>
+
                 <span className="float-right">
                     <Link to="/runtime/newdoc">
                         <i className="fa fa-plus"></i>

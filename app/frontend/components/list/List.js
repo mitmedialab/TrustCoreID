@@ -8,22 +8,22 @@ export default class List extends Component {
 
     constructor(props) {
         super(props);
-
     }
 
     render() {
-
-
         let data;
         let group = this.props.match.params.id || 0;
-        if (this.props.list && this.props.list[group].length > 0) {
+        if (this.props.list && this.props.list[group] && this.props.list[group].length > 0) {
             data = this.props.list[group];
             return (
 
                 <div className="container" data-tid="container">
                     <div className={styles.group}>
                         {data.map((item, index) => {
-                            return <ListItem key={index} item={item} sign={ ()=> {this.props._sign(item)}}/>
+                            return <ListItem key={index} item={item}
+                                             send={ ()=> {this.props.send(item, this.props.user.email)}}
+                                             sign={ ()=> {this.props.sign(item)}}
+                                             remove={ ()=> {this.props.remove(item)}} />
                         })}
                     </div>
                 </div>

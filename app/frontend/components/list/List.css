@@ -1,6 +1,6 @@
 
-.group {
-  box-shadow: 0 1px 1px 1px rgba(0,0,0,0.1);
+.group > div {
+  transition: all 0.2s;
 }
 
 .item {
@@ -9,7 +9,7 @@
   color: #424242;
   padding: 10px;
   border: 1px solid #d9d9d9;
-  border-bottom: 0 none;
+  margin-top: -1px;
 }
 
 .summary {
@@ -30,4 +30,14 @@
 .pullRight {
   float: right;
   display: inline-block;
+}
+
+.expanded {
+  display: block;
+  background-color: #FFFFFF;
+  color: #424242;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  margin: 2px 0;
+  box-shadow: 0 0 6px 1px rgba(0,0,0,0.1);
 }

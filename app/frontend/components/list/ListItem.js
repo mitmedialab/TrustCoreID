@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styles from './List.css';
 import PayloadItem from '../common/PayloadItem';
+import ReactJson from 'react-json-view'
+import Identifier from '../common/Identifier';
 
 class ListItem extends React.Component {
 
@@ -10,23 +12,40 @@ class ListItem extends React.Component {
 
         this.state = {
             expanded: false
-        }
+        };
+
     }
 
 
     render() {
 
         const getSuffix = () => {
-            if (this.props.item.atr.signatures) {
-                return (<span className="float-right">
+            if (this.props.item.signatures) {
+                return (
+                    <span className="float-right">
                     <i className="fa fa-key"></i>
-                    {this.props.item.atr.signatures.length}
-                </span>)
-            } else {
-                return (<span className="float-right">
-                    <span onClick={this.props.sign}>
+                        {this.props.item.signatures.length}
+
+                        {this.props.item.signatures.length < this.props.item.to.length + 1 ?
+                            (<span className="link" onClick={this.props.sign}>
                         <i className="fa fa-check"></i>
                         Sign
+                    </span>) : ''}
+                </span>
+                )
+            } else {
+                return (<span className="float-right">
+                    <span className="link" onClick={this.props.send}>
+                        <i className="fa fa-arrow-right"></i>
+                        Send
+                    </span>
+                    <span className="link" onClick={this.props.sign}>
+                        <i className="fa fa-check"></i>
+                        Sign
+                    </span>
+                     <span className="link danger ml-2" onClick={this.props.remove}>
+                        <i className="fa fa-remove"></i>
+                        Delete
                     </span>
 
                 </span>)
@@ -37,41 +56,50 @@ class ListItem extends React.Component {
             if (!this.state.expanded)
                 return;
 
-            let payload = this.props.item.atr.payload.constructor === Array ?
-                this.props.item.atr.payload : [this.props.item.atr.payload];
-
             return (
                 <div>
-                    <label>Signatures</label>
-                    {this.props.item.atr.signatures ? this.props.item.atr.signatures.map((signature, index) => {
-                        return (
-                            <div key={index}>
-                                <div className="listItem">
-                                    <span className="listItemLabel">ISS:</span>
-                                    {signature.protected.iss}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">ALG:</span>
-                                    {signature.protected.alg}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">TYP:</span>
-                                    {signature.protected.typ}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">KID:</span>
-                                    {signature.protected.kid}</div>
-                                <div className="listItem">
-                                    <span className="listItemLabel">Signature:</span>
-                                    <div className="signature">{signature.signature}</div>
-                                </div>
+                    <label>To</label>
 
-                            </div>)
+                    {this.props.item.to.map((to, index)=> {
+                        return (<div key={index}><Identifier initials={to} size={24} />{to}</div>)
+                    })}
+                    <label>Signatures</label>
+                    {this.props.item.signatures ? this.props.item.signatures.map((signature, index) => {
+                        if (signature && signature.protected) {
+                            return (
+                                <div key={index} className="mt-4 bordered">
+                                    <div className="listItem">
+                                        <span className="listItemLabel">ALG:</span>
+                                        {signature.protected.alg}</div>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">Public Key:</span>
+                                        <div className="signature">{signature.protected.jwc}</div>
+                                    </div>
+                                    <div className="listItem">
+                                        <span className="listItemLabel">Signature:</span>
+                                        <div className="signature">{signature.signature}</div>
+                                    </div>
+
+                                </div>
+                            )
+                        }
                     }) : undefined}
 
+                    { this.props.item._attachments ?
+                        <span>
+                            <label>Attachments</label>
+                            {Object.keys(this.props.item._attachments).map((key)=> {
+                                let att = this.props.item._attachments[key];
+                                return (<PayloadItem
+                                    key={key}
+                                    name={key}
+                                    document={this.props.item._id}
+                                    download={true}
+                                    item={att}/>)
+                            })}
+                        </span> : undefined}
                     <label>Payload</label>
-                    {
-                        payload.map((item, index) => {
-                            return (<PayloadItem item={item} key={index}/>)
-                        })
-                    }
+                    <ReactJson src={this.props.item.payload}/>
                 </div>
             )
         };
@@ -86,12 +114,14 @@ class ListItem extends React.Component {
             }
         };
 
-        return (<div className={styles.item}>
-            <div className={styles.summary} onClick={() => {
-                this.setState({expanded: !this.state.expanded});
-            }}>
-                {getPrefix()}
-                {this.props.item.atr.name}
+        return (<div className={this.state.expanded ? styles.expanded : styles.item}>
+            <div className={styles.summary}>
+                <span onClick={() => {
+                        this.setState({expanded: !this.state.expanded});
+                    }}>
+                    {getPrefix()}
+                    {this.props.item.name}
+                    </span>
                 {getSuffix()}
             </div>
             {getDetailedView()}
