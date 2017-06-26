@@ -7,6 +7,7 @@ import rootReducer from '../reducers';
 import * as anonActions from '../actions/anon';
 import * as listPageActions from '../actions/listPage';
 import * as newDocumentActions from '../actions/newDocument';
+import * as activityFeedActions from '../actions/activityFeed';
 
 
 
@@ -38,6 +39,7 @@ const configureStore = (initialState) => {
         ...anonActions,
         ...listPageActions,
         ...newDocumentActions,
+        ...activityFeedActions,
         ...routerActions
     };
     // If Redux DevTools Extension is installed use it, otherwise use Redux compose

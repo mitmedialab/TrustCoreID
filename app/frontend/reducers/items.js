@@ -8,7 +8,7 @@ export default function items(state = {
 
     switch (action.type) {
         case USER_DATA:
-            return Object.assign({userData: action.payload});
+            return Object.assign({}, state, {userData: action.payload});
         case 'DOCUMENTS':
             let list = action.payload.rows.reduce((memo, item) => {
                 let document = item.doc;

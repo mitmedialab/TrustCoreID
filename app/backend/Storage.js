@@ -72,10 +72,6 @@ class Storage {
             console.log('Local Feed changes err:', err)
         });
 
-
-
-
-
     }
 
     get localStorage() {
@@ -126,10 +122,18 @@ class Storage {
         let collection = Promise.all(promiseArray);
 
         collection.catch(err=> {
-            console.log('###', err);
+            console.log('Promise(All) error:', err);
         });
 
         return collection;
+    }
+
+    getFeedItems(skip = 0, limit = 5) {
+        return this.localFeed.allDocs({
+            skip, limit,
+            include_docs: true,
+            descending: true
+        })
     }
 
     get(id) {

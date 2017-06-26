@@ -92,22 +92,25 @@ export default class NewDocument extends Component {
 
         if (this.state.schema && !this.schemaComponents) {
             const getSchemaComponents = (schema, path = 'schema', index = 0) => {
-                return (
-                    <span key={index}>
-                    <div className="header">{schema.description}</div>
-                        {
-                            Object.keys(schema.properties).map((item, index)=> {
-                                if (schema.properties[item].type === 'object') {
-                                    return getSchemaComponents(schema.properties[item], `${path}.properties.${item}`, index);
-                                } else {
-                                    return (<div key={index}>
-                                        {this.getComponent(item,
-                                            schema.properties[item],
-                                            `${path}.properties.${item}`)}</div>)
-                                }
-                            })
-                        }
+                if (schema.properties) {
+                    return (
+                        <span key={index}>
+                            <h4>{this.state.schema.title}</h4>
+                            <div className="header">{schema.description}</div>
+                            {
+                                Object.keys(schema.properties).map((item, index)=> {
+                                    if (schema.properties[item].type === 'object') {
+                                        return getSchemaComponents(schema.properties[item], `${path}.properties.${item}`, index);
+                                    } else {
+                                        return (<div key={index}>
+                                            {this.getComponent(item,
+                                                schema.properties[item],
+                                                `${path}.properties.${item}`)}</div>)
+                                    }
+                                })
+                            }
                 </span>)
+                }
             }
             this.schemaComponents = getSchemaComponents(this.state.schema)
         }
@@ -147,7 +150,7 @@ export default class NewDocument extends Component {
                         <span className="btn btn-primary-outline "
                               onClick={ () => {this.upload()}}>Add File</span>
                     </div>
-                    <h4>{this.state.schema.title}</h4>
+
                     {this.schemaComponents}
 
                     <div className="text-right">
