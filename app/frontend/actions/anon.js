@@ -35,7 +35,7 @@ export function register(email, name) {
             .then((data) => {
                 Storage.open(walletInstance._id).then((data)=> {
                     dispatch({type: USER_DATA, payload: email});
-                    //refreshDocumentList(dispatch, 0);
+                    refreshDocumentList(dispatch, 0);
                 });
 
             })

@@ -10,7 +10,8 @@
     "url": "https://github.com/chentsulin"
   },
   "scripts": {
-    "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source",
+    "apostinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source",
+    "prev-postinstall": "electron-rebuild -f",
     "rebuild": "electron-rebuild -f"
   },
   "license": "MIT",
@@ -18,12 +19,16 @@
     "@trust/jose": "^0.3.0",
     "@trust/keyto": "^0.3.0",
     "@trust/webcrypto": "^0.2.1",
+    "crypto-js": "^3.1.9-1",
     "leveldown": "^1.7.2",
     "merkle": "^0.5.1",
     "mmmagic": "^0.4.5",
     "pouchdb": "^6.2.0",
     "react-json-view": "^1.9.5",
-    "uuid4": "^1.0.0"
+    "uuid4": "^1.0.0",
+    "solc-loader": "^1.1.1",
+    "source-map-support": "^0.4.15",
+    "web3": "^0.15.3"
   },
   "devDependencies": {
     "electron-rebuild": "^1.5.11"
