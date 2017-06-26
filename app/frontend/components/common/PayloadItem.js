@@ -1,14 +1,33 @@
 import React from 'react';
 import {remote} from 'electron'
 
-const {Storage, Wallet} = require('electron').remote.require('./backend');
+const {Storage, Wallet} = remote.require('./backend');
 const fs = require('fs');
+const shell = remote.shell;
 
 const mappings = [
-    {search: /\.(pdf)$/i, icon: 'fa-file-pdf-o'},
+    {
+        search: /\.(pdf)$/i, icon: 'fa-file-pdf-o', preview: (buf)=> {
+
+        fs.writeFile('temp.pdf', buf, function (err, data) {
+            if (err) {
+                return console.log(err);
+            } else {
+                var path = require("path");
+                var absolutePath = path.resolve("temp.pdf");
+                shell.openItem(absolutePath);
+            }
+        });
+    }
+    },
     {
         search: /\.(gif|jpg|jpeg|tiff|png)$/i,
-        icon: 'fa-file-image-o'
+        icon: 'fa-file-image-o',
+        preview: (buf) => {
+            var blob = new Blob([buf], {type: 'image/png'});
+            let str = URL.createObjectURL(blob);
+            return (<img src={str}/>)
+        }
     }
 ];
 
@@ -79,7 +98,10 @@ class PayloadItem extends React.Component {
 
                 {previewFunction ? (<i className="float-right fa fa-eye mr-2"
                                        onClick={()=>{this.showPreview(previewFunction)}}></i>) : undefined}
-                {this.state.preview}
+                {this.state.preview ? (<div className="preview">
+                    <span className="content">{this.state.preview}</span>
+                    <i className="fa fa-close" onClick={()=>{ this.setState({preview: undefined})}}/>
+                </div>) : undefined}
             </span>)
     }
 
