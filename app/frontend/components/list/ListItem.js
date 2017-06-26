@@ -23,14 +23,20 @@ class ListItem extends React.Component {
             if (this.props.item.signatures) {
                 return (
                     <span className="float-right">
-                    <i className="fa fa-key"></i>
-                        {this.props.item.signatures.length}
+                        <span className="mr-2">
+                            <i className="fa fa-key "></i>
+                            {this.props.item.signatures.length}
+                        </span>
 
                         {this.props.item.signatures.length < this.props.item.to.length + 1 ?
                             (<span className="link" onClick={this.props.sign}>
                         <i className="fa fa-check"></i>
                         Sign
-                    </span>) : ''}
+                    </span>) : ( !this.props.item.txReceipt ?
+                                (<span className="link" onClick={this.props.finalize}>
+                                <i className="fa fa-sign-in"></i> Finalize
+                            </span>) : ''
+                        )}
                 </span>
                 )
             } else {
@@ -61,7 +67,7 @@ class ListItem extends React.Component {
                     <label>To</label>
 
                     {this.props.item.to.map((to, index)=> {
-                        return (<div key={index}><Identifier initials={to} size={24} />{to}</div>)
+                        return (<div key={index}><Identifier initials={to} size={24}/>{to}</div>)
                     })}
                     <label>Signatures</label>
                     {this.props.item.signatures ? this.props.item.signatures.map((signature, index) => {
@@ -100,6 +106,13 @@ class ListItem extends React.Component {
                         </span> : undefined}
                     <label>Payload</label>
                     <ReactJson src={this.props.item.payload}/>
+
+                    {this.props.item.txReceipt ? (
+                        <span>
+                            <label>Ethereum Transaction Receipt</label>
+                            <ReactJson src={this.props.item.txReceipt}/>
+                        </span>
+                    ) : ''}
                 </div>
             )
         };

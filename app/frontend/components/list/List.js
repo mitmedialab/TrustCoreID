@@ -23,6 +23,7 @@ export default class List extends Component {
                             return <ListItem key={index} item={item}
                                              send={ ()=> {this.props.send(item, this.props.user.email)}}
                                              sign={ ()=> {this.props.sign(item)}}
+                                             finalize={ ()=> {this.props.finalize(item)}}
                                              remove={ ()=> {this.props.remove(item)}} />
                         })}
                     </div>

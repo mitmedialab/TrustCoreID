@@ -39,6 +39,31 @@ export function sign(item) {
     }
 }
 
+export function finalize(item) {
+
+    console.log('finalize');
+    return (dispatch) => {
+        Promise.resolve()
+            .then(() => Wallet.open())
+            .then(wallet => {
+                let {payload, signatures} = item;
+                return wallet.hashAndPutItOnTheBlockchain(JSON.stringify({payload, signatures}))
+            })
+            .then(updated => {
+                Storage.open().then(store => {
+                    item.txReceipt = updated;
+                    store.put(JSON.parse(JSON.stringify(item)), true).then(doc => {
+                            refreshDocumentList(dispatch);
+                        })
+                        .catch(err => {
+                            refreshDocumentList(dispatch);
+                        })
+                });
+            })
+
+    }
+}
+
 export function remove(item) {
 
     return (dispatch) => {
