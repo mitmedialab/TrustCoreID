@@ -11,7 +11,9 @@ More information about the scope and context of this project is available here: 
 
 
 
+# Thanks and Attributions
 
+<img width="801" alt="screen shot 2017-06-27 at 4 16 10 pm" src="https://user-images.githubusercontent.com/2357755/27608080-1e7c4992-5b54-11e7-9b0b-c0cebf699c8b.png">
 
 
 
