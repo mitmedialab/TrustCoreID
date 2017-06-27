@@ -1,3 +1,5 @@
+This Reposository is intended to explore the potential for using and extending open source code by the [increadible team behind Anvil](https://github.com/anvilresearch) now being advanced at MIT and elsewhere to accomplish the [Media Lab research goal](https://law.mit.edu/blog/core-identity-blockchain-project) of providing a digital identity of our own for every person, known as ["CoreID"](http://coreid.me).  
+
 ## Scope of Collaboration
 
 This collaboration is for the purpose of creating and demonstrating the potential usefulness of blockchain-backed digital signatures.  
