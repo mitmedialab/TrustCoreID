@@ -69,14 +69,16 @@ const configureStore = (initialState) => {
         .then(() => Wallet.open())
         .then(wallet => {
             store.dispatch({type: 'USER_DATA', payload: {email: wallet.email, id: wallet._id}});
-            Storage.open(wallet._id, ()=>{
-                console.log('should update');
-                anonActions.refreshDocumentList(store.dispatch, 0);
-            }).then(storage => {
-                storage.list().then(data => {
-                    store.dispatch({type: 'DOCUMENTS', payload: data});
+            if (wallet._id) {
+                Storage.open(wallet._id, (data)=> {
+                    console.log(data);
+                }).then(storage => {
+                    anonActions.refreshDocumentList(store.dispatch, 0);
+                    storage.list().then(data => {
+                        store.dispatch({type: 'DOCUMENTS', payload: data});
+                    })
                 })
-            })
+            }
         });
 
     return store;

@@ -26,17 +26,19 @@ export function register(email, name) {
         Promise.resolve()
             .then(() => Wallet.open())
             .then(wallet => {
-                walletInstance = wallet;
-                wallet.registerPublicKey({
+                return wallet.registerPublicKey({
                     provider: 'http://localhost:5150',
                     registration: {name, email}
                 })
             })
             .then((data) => {
-                Storage.open(walletInstance._id).then((data)=> {
-                    dispatch({type: USER_DATA, payload: email});
-                    refreshDocumentList(dispatch, 0);
-                });
+                Wallet.open().then(wallet => {
+                    walletInstance = wallet;
+                    Storage.open(walletInstance._id).then((data)=> {
+                        dispatch({type: USER_DATA, payload: email});
+                        refreshDocumentList(dispatch, 0);
+                    });
+                })
 
             })
 

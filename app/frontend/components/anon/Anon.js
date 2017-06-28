@@ -7,7 +7,7 @@ export default class Anon extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            panel: 0,
+            panel: 1,
             email: '',
             password: '',
             name: '',
