@@ -40,8 +40,7 @@ Start server (execute from project root)
 ```
 node server/server.js
 ```
-
-Start client (execute from project root)
+In a new terminal, start client (execute from project root)
 ```
 npm run dev
 ```
